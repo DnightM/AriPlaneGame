@@ -1,0 +1,73 @@
+plugins {
+	id 'java'
+	id 'application'
+}
+mainClassName = 'plane.Main'
+sourceCompatibility = 1.8
+version = '0.0.1'
+buildDir = './build'
+
+ext {
+    processName= 'AirPlaneGame'
+    outputDir = "C:/${processName}"
+    xmlConfig = 'config/'
+}
+
+jar {
+    manifest {
+        attributes  'Title': processName, 'Version': version, 'Main-Class': mainClassName, 'Class-Path' : '.'
+    }
+    archiveName "${processName}_" + version + '.jar'
+    dependsOn configurations.runtime
+    from {
+        configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+    }
+    
+	// exclude 'start.bat'
+}
+
+task copyJar(type : Copy) {
+	from "${buildDir}/libs"
+    into "${outputDir}"
+}
+
+task copyConfig(type : Copy) {
+	from "${buildDir}/resources/main/config"
+	into "${outputDir}/config"
+}
+
+task makeBatch {
+	// batch 파일 작성
+	mkdir "${outputDir}"
+    new File("${outputDir}", "start.bat").text =
+	"echo off"+ "\n" +
+	"chcp 65001"+ "\n" +
+	"start /B javaw.exe -Dfile.encoding=UTF-8 -jar .\\${processName}_" + version + ".jar"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+clean {
+    delete "${outputDir}"
+    println("Delete ${outputDir}")
+}
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+    
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: "1.2.3"
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+    compile group: 'ch.qos.logback', name: 'logback-core', version: "1.2.3"
+}
+
+build.finalizedBy copyJar, copyConfig, makeBatch
