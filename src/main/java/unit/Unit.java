@@ -1,10 +1,15 @@
 package unit;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-public abstract class Unit implements Paintable {
-    private static double DIRECTION = 1 / Math.sqrt(2);
+import javax.imageio.ImageIO;
 
+public abstract class Unit {
+    private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
+
+    public static final int STAY = 0;
     public static final int WEST = 1;
     public static final int NORTH = 2;
     public static final int EAST = 4;
@@ -15,18 +20,16 @@ public abstract class Unit implements Paintable {
     public static final int SOUTH_EAST = 12;
 
     public double[] pos;
-    private int width;
-    private int height;
     private double speed; // 0:정지, 음수 가능
     private int direction; // 1:서, 2:북, 4:동, 8:남, 3:북서, 9:남서, 6:북동, 12:남동
 
-    public Unit(int x, int y, int width, int height, int direction, double speed) {
+    public Unit(int x, int y, int direction, double speed) {
         this.pos = new double[] { x, y };
-        this.width = width;
-        this.height = height;
         this.direction = direction;
         this.speed = speed;
     }
+
+    public abstract void draw(Graphics g);
 
     public void move() {
         for (int i = 0; i < 4; i++) {
@@ -35,7 +38,7 @@ public abstract class Unit implements Paintable {
                 double speed = this.speed;
                 if (direction != t) {
                     // 대각선이므로 대각선 비율을 곱해줌
-                    speed *= DIRECTION;
+                    speed *= DIAGONAL_WIGHT;
                 }
                 // i=0,1, i=2,3
                 if (i < 2) {
@@ -64,5 +67,14 @@ public abstract class Unit implements Paintable {
     private int toInt(double pos) {
         //                return (int) pos;
         return (int) Math.round(pos);
+    }
+
+    protected static BufferedImage getImg(String path) {
+        try {
+            return ImageIO.read(Unit.class.getClassLoader().getResourceAsStream(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

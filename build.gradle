@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'application'
 }
-mainClassName = 'plane.Main'
+mainClassName = 'main.Main'
 sourceCompatibility = 1.8
 version = '0.0.1'
 buildDir = './build'

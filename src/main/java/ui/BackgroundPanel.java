@@ -17,7 +17,7 @@ public class BackgroundPanel extends JPanel {
     private static BufferedImage BACK_GROUND_IMG;
     private int width;
     private int height;
-    protected ArrayList<Unit> unitList = new ArrayList<>();
+    public ArrayList<Unit> unitList = new ArrayList<>();
 
     public BackgroundPanel(int width, int height) {
         this.width = width;
