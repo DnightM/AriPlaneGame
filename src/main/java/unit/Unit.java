@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public abstract class Unit {
+public abstract class Unit implements BasicSetting {
     private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
 
     public static final int STAY = 0;
