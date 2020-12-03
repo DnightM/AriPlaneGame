@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import stage.Stage;
+
 @SuppressWarnings("serial")
 public class Window extends JFrame {
     private Dimension dimen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -33,7 +35,7 @@ public class Window extends JFrame {
         this.panelHeight = 1000 - i.top - i.bottom;
     }
 
-    public void setPanel(BackgroundPanel b) {
+    public void setPanel(Stage b) {
         this.getContentPane().removeAll();
         this.add(b);
         this.validate();

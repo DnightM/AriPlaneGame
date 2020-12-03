@@ -2,34 +2,36 @@ package unit.plane;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 import unit.Unit;
-import unit.bullet.Bullet;
 
 public abstract class Plane extends Unit {
     public static int DIRECTION = Unit.STAY;
 
-    public abstract Bullet setBullet(Bullet bullet);
+    public abstract void setBulletName(String bulletName);
 
-    public abstract Bullet getBullet();
+    public abstract String getBulletName();
+
+    protected final ArrayList<Unit> bulletList;
 
     public Plane(int x, int y, double speed) {
         super(x, y, Unit.STAY, speed);
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this.bulletTimerThread(), 0, getBullet().getRate(), TimeUnit.MILLISECONDS);
+        bulletList = new ArrayList<>();
+
     }
 
-    public Runnable bulletTimerThread() {
-        return () -> {
-            Bullet bullet = getBullet();
-            
-        };
+    @Override
+    public boolean hasSubUnit() {
+        return true;
     }
 
-    public KeyAdapter getKeyAdapter() {
+    @Override
+    public ArrayList<Unit> getSubUnitList() {
+        return bulletList;
+    }
+
+    public final KeyAdapter getKeyAdapter() {
         return new KeyAdapter() {
             /*  37=left
              *  38=right

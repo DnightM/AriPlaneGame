@@ -3,7 +3,8 @@ package unit.plane;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import unit.bullet.Bullet;
+import unit.Unit;
+import unit.bullet.BulletFactory;
 
 public class FirstPlane extends Plane {
     private static final double SPEED = 1d;
@@ -11,7 +12,8 @@ public class FirstPlane extends Plane {
     private static final int HEIGHT = 20;
     private static BufferedImage IMG = getImg("img/plane/firstPlane.png");
 
-    private Bullet bullet;
+    private String bulletName = "straight";
+    private int bulletCount = 0;
 
     public FirstPlane(int x, int y) {
         super(x, y, SPEED);
@@ -23,12 +25,26 @@ public class FirstPlane extends Plane {
     }
 
     @Override
-    public Bullet setBullet(Bullet bullet) {
-        return this.bullet = bullet;
+    public void setBulletName(String bulletName) {
+        this.bulletName = bulletName;
     }
 
     @Override
-    public Bullet getBullet() {
-        return bullet;
+    public String getBulletName() {
+        return bulletName;
     }
+
+    @Override
+    public void move() {
+        super.move();
+        bulletCount++;
+        try {
+            if (bulletCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
+                bulletList.add(BulletFactory.getBullet(getBulletName(), getX(), getY(), Unit.NORTH));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

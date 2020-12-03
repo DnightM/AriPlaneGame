@@ -3,6 +3,7 @@ package unit;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -75,6 +76,14 @@ public abstract class Unit implements BasicSetting {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public boolean hasSubUnit() {
+        return false;
+    }
+
+    public ArrayList<Unit> getSubUnitList() {
         return null;
     }
 }

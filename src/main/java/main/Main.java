@@ -1,13 +1,14 @@
 package main;
 
-import stage.Controller;
+import stage.Stage;
+import stage.Stage1;
 import ui.Window;
 import unit.plane.FirstPlane;
 
 public class Main {
     public static void main(String[] args) {
         Window win = new Window();
-        Controller con = new Controller(win.panelWidth, win.panelHeight);
+        Stage1 con = new Stage1(win.panelWidth, win.panelHeight);
         con.init();
         FirstPlane p = new FirstPlane(500, 900);
         con.unitList.add(p);
@@ -16,7 +17,7 @@ public class Main {
         run(con);
     }
 
-    private static void run(Controller con) {
+    private static void run(Stage con) {
         int sleep = 5;
         long time = System.currentTimeMillis() / 1000;
 
