@@ -7,6 +7,8 @@ public abstract class Bullet extends Unit {
         super(x, y, direction);
     }
 
+    public abstract String getBulletName();
+
     protected abstract int direction();
 
     protected abstract int rate(); // 높을수록 느려짐

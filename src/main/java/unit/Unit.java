@@ -3,13 +3,13 @@ package unit;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 public abstract class Unit {
     private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
-
+    public static final int UNIT_ARR_LENGTH = 100;
+    
     public static final int STAY = 0;
     public static final int WEST = 1;
     public static final int NORTH = 2;
@@ -27,6 +27,8 @@ public abstract class Unit {
         this.pos = new double[] { x, y };
         this.direction = direction;
     }
+
+    private boolean dead = false;
 
     // speed
     protected abstract double speed(); // 0:정지, 음수 가능
@@ -79,8 +81,23 @@ public abstract class Unit {
         return false;
     }
 
-    public ArrayList<Unit> getSubUnitList() {
+    public Unit[] getSubUnitArr() {
         return null;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    // life
+    public void dead() {
+        dead = true;
+    }
+
+    public void alive(int x, int y) {
+        dead = false;
+        pos[0] = x;
+        pos[1] = y;
     }
 
     // Move

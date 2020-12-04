@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -16,11 +14,13 @@ import unit.plane.friendly.Friendly;
 
 @SuppressWarnings("serial")
 public class Stage extends JPanel {
+    private static final int UNIT_ARR_LENGTH = Unit.UNIT_ARR_LENGTH;
+
     private static BufferedImage BACK_GROUND_IMG;
     private int width;
     private int height;
     protected Friendly plane;
-    public ArrayList<Unit> unitList = new ArrayList<>();
+    public Unit[] unitArr = new Unit[UNIT_ARR_LENGTH];
 
     public Stage(int width, int height, Friendly plane) {
         this.width = width;
@@ -36,20 +36,22 @@ public class Stage extends JPanel {
 
     public void run() {
         moveUnit(plane);
-        moveUnit(unitList);
+        moveUnit(unitArr);
         this.repaint();
     }
 
-    private void moveUnit(ArrayList<Unit> unitList) {
-        Iterator<Unit> iter = unitList.iterator();
-        while (iter.hasNext()) {
-            Unit unit = iter.next();
+    private void moveUnit(Unit[] unitArr) {
+        for (int i = 0; i < UNIT_ARR_LENGTH; i++) {
+            Unit unit = unitArr[i];
+            if (unit == null || unit.isDead()) {
+                continue;
+            }
             if (unit.getX() < 0 || unit.getX() > width) {
-                iter.remove();
+                unit.dead();
                 continue;
             }
             if (unit.getY() < 0 || unit.getY() > height) {
-                iter.remove();
+                unit.dead();
                 continue;
             }
             moveUnit(unit);
@@ -59,41 +61,45 @@ public class Stage extends JPanel {
     private void moveUnit(Unit unit) {
         unit.move();
         if (unit.hasSubUnit()) {
-            moveUnit(unit.getSubUnitList());
+            moveUnit(unit.getSubUnitArr());
         }
     }
 
-    long time = 0, count = 0;
+    long time = 0, count = 0, drawTime = 0;
 
     @Override
     public void paint(Graphics g) {
-        long before = time;
-        time = System.currentTimeMillis() / 1000;
+        long before = time/ 1000;
+        time = System.currentTimeMillis() ;
         count++;
         BufferedImage tempImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = tempImg.createGraphics();
         g2d.drawImage(BACK_GROUND_IMG, 0, 0, width, height, 0, 0, BACK_GROUND_IMG.getWidth(), BACK_GROUND_IMG.getHeight(), null);
 
         drawUnit(g2d, plane);
-        drawUnit(g2d, unitList);
+        drawUnit(g2d, unitArr);
         g.drawImage(tempImg, 0, 0, null);
-        if (time != before) {
-            System.out.println("time:" + time + " | " + "frame:" + count);
+
+        drawTime += System.currentTimeMillis() - time;
+        if (time/ 1000 != before) {
+            System.out.println("drawer | time:" + time + " | " + "frame:" + count + " | drawTime:" + drawTime);
             count = 0;
+            drawTime = 0;
         }
     }
 
     private void drawUnit(Graphics2D g2d, Unit unit) {
         unit.draw(g2d);
         if (unit.hasSubUnit()) {
-            drawUnit(g2d, unit.getSubUnitList());
+            drawUnit(g2d, unit.getSubUnitArr());
         }
     }
 
-    private void drawUnit(Graphics2D g2d, ArrayList<Unit> unitList) {
-        Iterator<Unit> iter = unitList.iterator();
-        while (iter.hasNext()) {
-            Unit unit = iter.next();
+    private void drawUnit(Graphics2D g2d, Unit[] unitArr) {
+        for (Unit unit : unitArr) {
+            if (unit == null || unit.isDead()) {
+                continue;
+            }
             drawUnit(g2d, unit);
         }
     }

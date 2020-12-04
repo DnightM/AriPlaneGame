@@ -6,7 +6,7 @@ import unit.Unit;
 
 public class StraightBullet extends Bullet {
     public static final int RATE = 10;
-    private static final BufferedImage IMG = getImg("img/bullet/straightBullet.png");
+    private static final BufferedImage IMG = getImg("img/bullet/StraightBullet.png");
 
     public StraightBullet(int x, int y) {
         this(x, y, Unit.NORTH);
@@ -44,5 +44,10 @@ public class StraightBullet extends Bullet {
     @Override
     protected int direction() {
         return Unit.NORTH;
+    }
+
+    @Override
+    public String getBulletName() {
+        return "StraightBullet";
     }
 }

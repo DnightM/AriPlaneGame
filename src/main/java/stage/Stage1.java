@@ -10,17 +10,9 @@ public class Stage1 extends Stage {
     }
 
     public void init() {
-        for (int i = 0; i < 10; i++) {
-            Enemy1 e1 = new Enemy1(100, 100);
-            unitList.add(e1);
-            Enemy1 e2 = new Enemy1(200, 100);
-            unitList.add(e2);
-            Enemy1 e3 = new Enemy1(300, 100);
-            unitList.add(e3);
-            Enemy1 e4 = new Enemy1(400, 100);
-            unitList.add(e4);
-            Enemy1 e5 = new Enemy1(500, 100);
-            unitList.add(e5);
+        for (int i = 0; i < 20; i++) {
+            Enemy1 e1 = new Enemy1(50 * i + 100, 100);
+            unitArr[i] = e1;
         }
     }
 }

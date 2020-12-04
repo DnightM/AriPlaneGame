@@ -1,19 +1,19 @@
 package unit.plane;
 
-import java.util.ArrayList;
-
 import unit.Unit;
+import unit.bullet.Bullet;
 import unit.bullet.BulletFactory;
 
 public abstract class Plane extends Unit {
     public abstract String getBulletName();
 
-    private final ArrayList<Unit> bulletList;
+    private final Unit[] bulletArr;
     private int bulletCount = 0;
+    private int bulletArrIdx = 0;
 
     public Plane(int x, int y, int direction) {
         super(x, y, direction);
-        bulletList = new ArrayList<>();
+        bulletArr = new Unit[UNIT_ARR_LENGTH];
     }
 
     @Override
@@ -22,8 +22,8 @@ public abstract class Plane extends Unit {
     }
 
     @Override
-    public ArrayList<Unit> getSubUnitList() {
-        return bulletList;
+    public Unit[] getSubUnitArr() {
+        return bulletArr;
     }
 
     @Override
@@ -32,7 +32,25 @@ public abstract class Plane extends Unit {
         bulletCount++;
         try {
             if (bulletCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
-                getSubUnitList().add(BulletFactory.getBullet(getBulletName(), getX(), getY()));
+                try {
+                    Unit[] unitArr = getSubUnitArr();
+                    Bullet bullet = (Bullet) unitArr[bulletArrIdx];
+                    if (bullet != null) {
+                        if (bullet.getBulletName().equals(getBulletName())) {
+                            if (bullet.isDead()) {
+                                bullet.alive(getX(), getY());
+                                return;
+                            } else {
+                                throw new Exception("Bullet Alive");
+                            }
+                        }
+                    }
+                    unitArr[bulletArrIdx] = BulletFactory.getBullet(getBulletName(), getX(), getY());
+                } finally {
+                    if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
+                        bulletArrIdx = 0;
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
