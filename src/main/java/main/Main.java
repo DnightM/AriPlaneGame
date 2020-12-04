@@ -7,6 +7,7 @@ import stage.Stage;
 import stage.Stage1;
 import ui.Window;
 import unit.plane.friendly.Friendly1;
+import util.TimeChecker;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,22 +21,16 @@ public class Main {
         run(stage);
     }
 
-    static long time = 0, count = 0, calcuratorTime = 0;
-
     private static void run(Stage stage) {
+        TimeChecker tc = new TimeChecker("worker");
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.scheduleAtFixedRate(() -> {
-            long before = time / 1000;
-            time = System.currentTimeMillis();
-            count++;
+            tc.timeCheckerStart();
 
             stage.run();
-            calcuratorTime += System.currentTimeMillis() - time;
-            if (time / 1000 != before) {
-                System.out.println("worker | time:" + time + " | " + "frame:" + count + " | calcuratorTime: " + calcuratorTime);
-                count = 0;
-                calcuratorTime = 0;
-            }
+
+            tc.timeCheckerEnd();
         }, 0, 1000 / 120, TimeUnit.MILLISECONDS);
     }
+
 }

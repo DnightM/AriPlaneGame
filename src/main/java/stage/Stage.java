@@ -11,10 +11,12 @@ import javax.swing.JPanel;
 
 import unit.Unit;
 import unit.plane.friendly.Friendly;
+import util.TimeChecker;
 
 @SuppressWarnings("serial")
 public class Stage extends JPanel {
     private static final int UNIT_ARR_LENGTH = Unit.UNIT_ARR_LENGTH;
+    private TimeChecker tc = new TimeChecker("drawer");
 
     private static BufferedImage BACK_GROUND_IMG;
     private int width;
@@ -65,13 +67,10 @@ public class Stage extends JPanel {
         }
     }
 
-    long time = 0, count = 0, drawTime = 0;
-
     @Override
     public void paint(Graphics g) {
-        long before = time/ 1000;
-        time = System.currentTimeMillis() ;
-        count++;
+        tc.timeCheckerStart();
+
         BufferedImage tempImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = tempImg.createGraphics();
         g2d.drawImage(BACK_GROUND_IMG, 0, 0, width, height, 0, 0, BACK_GROUND_IMG.getWidth(), BACK_GROUND_IMG.getHeight(), null);
@@ -80,12 +79,7 @@ public class Stage extends JPanel {
         drawUnit(g2d, unitArr);
         g.drawImage(tempImg, 0, 0, null);
 
-        drawTime += System.currentTimeMillis() - time;
-        if (time/ 1000 != before) {
-            System.out.println("drawer | time:" + time + " | " + "frame:" + count + " | drawTime:" + drawTime);
-            count = 0;
-            drawTime = 0;
-        }
+        tc.timeCheckerEnd();
     }
 
     private void drawUnit(Graphics2D g2d, Unit unit) {
