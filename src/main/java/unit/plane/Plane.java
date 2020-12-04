@@ -1,24 +1,19 @@
 package unit.plane;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import unit.Unit;
+import unit.bullet.BulletFactory;
 
 public abstract class Plane extends Unit {
-    public static int DIRECTION = Unit.STAY;
-
-    public abstract void setBulletName(String bulletName);
-
     public abstract String getBulletName();
 
-    protected final ArrayList<Unit> bulletList;
+    private final ArrayList<Unit> bulletList;
+    private int bulletCount = 0;
 
-    public Plane(int x, int y, double speed) {
-        super(x, y, Unit.STAY, speed);
+    public Plane(int x, int y, int direction) {
+        super(x, y, direction);
         bulletList = new ArrayList<>();
-
     }
 
     @Override
@@ -31,82 +26,17 @@ public abstract class Plane extends Unit {
         return bulletList;
     }
 
-    public final KeyAdapter getKeyAdapter() {
-        return new KeyAdapter() {
-            /*  37=left
-             *  38=right
-             *  39=up
-             *  40=down
-             *  
-             *  90=z
-             *  88=x
-             *  67=c
-             *  
-             *  32 = space
-             */
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-
-                switch (key) {
-                case 37:
-                    if ((DIRECTION & Unit.WEST) == 0) {
-                        DIRECTION += Unit.WEST;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 38:
-                    if ((DIRECTION & Unit.NORTH) == 0) {
-                        DIRECTION += Unit.NORTH;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 39:
-                    if ((DIRECTION & Unit.EAST) == 0) {
-                        DIRECTION += Unit.EAST;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 40:
-                    if ((DIRECTION & Unit.SOUTH) == 0) {
-                        DIRECTION += Unit.SOUTH;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                }
+    @Override
+    public void move() {
+        super.move();
+        bulletCount++;
+        try {
+            if (bulletCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
+                getSubUnitList().add(BulletFactory.getBullet(getBulletName(), getX(), getY()));
             }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                int key = e.getKeyCode();
-                switch (key) {
-                case 37:
-                    if ((DIRECTION & Unit.WEST) > 0) {
-                        DIRECTION -= Unit.WEST;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 38:
-                    if ((DIRECTION & Unit.NORTH) > 0) {
-                        DIRECTION -= Unit.NORTH;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 39:
-                    if ((DIRECTION & Unit.EAST) > 0) {
-                        DIRECTION -= Unit.EAST;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                case 40:
-                    if ((DIRECTION & Unit.SOUTH) > 0) {
-                        DIRECTION -= Unit.SOUTH;
-                        setDirection(DIRECTION);
-                    }
-                    break;
-                }
-            }
-
-        };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

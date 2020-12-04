@@ -3,40 +3,30 @@ package main;
 import stage.Stage;
 import stage.Stage1;
 import ui.Window;
-import unit.plane.FirstPlane;
+import unit.plane.friendly.Friendly1;
 
 public class Main {
     public static void main(String[] args) {
         Window win = new Window();
-        Stage1 con = new Stage1(win.panelWidth, win.panelHeight);
-        con.init();
-        FirstPlane p = new FirstPlane(500, 900);
-        con.unitList.add(p);
-        win.setPanel(con);
+        Friendly1 p = new Friendly1(500, 900);
+        Stage1 stage = new Stage1(win.panelWidth, win.panelHeight, p);
+        stage.init();
+        win.setPanel(stage);
         win.addKeyListener(p.getKeyAdapter());
-        run(con);
+
+        try {
+            run(stage);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void run(Stage con) {
+    private static void run(Stage stage) throws InterruptedException {
         int sleep = 5;
-        long time = System.currentTimeMillis() / 1000;
 
-        long before = 0;
-        int count = 0;
         while (true) {
-            before = time;
-            time = System.currentTimeMillis() / 1000;
-            try {
-                Thread.sleep(sleep);
-                con.run();
-                count++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (time != before) {
-                System.out.println("sleep:" + sleep + "ms | time:" + time + " | " + "frame:" + count);
-                count = 0;
-            }
+            Thread.sleep(sleep);
+            stage.run();
         }
     }
 }
