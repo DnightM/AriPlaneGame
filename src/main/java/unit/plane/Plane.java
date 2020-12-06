@@ -5,15 +5,54 @@ import unit.bullet.Bullet;
 import unit.bullet.BulletFactory;
 
 public abstract class Plane extends Unit {
-    public abstract String getBulletName();
+    public abstract String getBulletName();// TODO 나중엔 int로 바꾸는게 어떨까함 속도가 문제 된다면.
 
-    private final Unit[] bulletArr;
-    private int bulletCount = 0;
+    private final Bullet[] bulletArr;
+    private int bulletRateCount = 0;
     private int bulletArrIdx = 0;
 
     public Plane(int x, int y, int direction) {
         super(x, y, direction);
-        bulletArr = new Unit[UNIT_ARR_LENGTH];
+        bulletArr = new Bullet[UNIT_ARR_LENGTH];
+        life = maxLife();
+    }
+
+    // life
+    private int life;
+
+    protected abstract int maxLife(); // 체력
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int varianceValue) {
+        life += varianceValue;
+        if (life < 1) {
+            this.dead();
+        }
+        if (life > maxLife()) {
+            life = maxLife();
+        }
+    }
+
+    public boolean isCollision(Unit opponent) {
+        int x1 = getX();
+        int y1 = getY();
+        int x2 = x1 + getWidth();
+        int y2 = y1 + getHeight();
+
+        int x1o = opponent.getX();
+        int y1o = opponent.getY();
+        int x2o = x1o + opponent.getWidth();
+        int y2o = y1o + opponent.getHeight();
+
+        boolean matchX = x1 <= x1o && x1o <= x2 || x1 <= x2o && x2o <= x2;// x1o가 x1과 x2 사이에 있거나 x2o가 x1과 x2 사이에 있는지
+        boolean matchY = y1 <= y1o && y1o <= y2 || y1 <= y2o && y2o <= y2; // y1o가 y1과 y2 사이에 있거나 y2o가 y1과 y2 사이에 있는지
+        if (matchX && matchY) { // 둘다 맞으면 해당 범위 안에 들어와있다고 판단
+            return true; // TODO 차후 세부 충돌코드는 여기에 구현
+        }
+        return false;
     }
 
     @Override
@@ -27,25 +66,34 @@ public abstract class Plane extends Unit {
     }
 
     @Override
+    public boolean isCheckCollision() {
+        return true;
+    }
+
+    @Override
     public void move() {
         super.move();
-        bulletCount++;
+        bulletRateCount++;
         try {
-            if (bulletCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
+            if (bulletRateCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
                 try {
                     Unit[] unitArr = getSubUnitArr();
                     Bullet bullet = (Bullet) unitArr[bulletArrIdx];
+                    int x = getX() + getWidth() / 2;
+                    int y = getY() + getHeight() / 2;
                     if (bullet != null) {
-                        if (bullet.getBulletName().equals(getBulletName())) {
+                        // 총알이 나오는 위치
+                        if (bullet.getClass().getSimpleName().equals(getBulletName())) {
                             if (bullet.isDead()) {
-                                bullet.alive(getX(), getY());
+                                bullet.alive(x, y);
                                 return;
                             } else {
+                                // 배열 크기 이상의 총알이 살아있다는 의미. 총알 배열 크기를 늘려줘야함
                                 throw new Exception("Bullet Alive");
                             }
                         }
                     }
-                    unitArr[bulletArrIdx] = BulletFactory.getBullet(getBulletName(), getX(), getY());
+                    unitArr[bulletArrIdx] = BulletFactory.getBullet(getBulletName(), x, y);
                 } finally {
                     if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
                         bulletArrIdx = 0;
@@ -56,5 +104,4 @@ public abstract class Plane extends Unit {
             e.printStackTrace();
         }
     }
-
 }

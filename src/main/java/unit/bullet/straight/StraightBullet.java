@@ -1,29 +1,33 @@
-package unit.bullet;
+package unit.bullet.straight;
 
 import java.awt.image.BufferedImage;
 
 import unit.Unit;
+import unit.bullet.Bullet;
 
 public class StraightBullet extends Bullet {
     public static final int RATE = 10;
+    private static final int WIDTH = 5;
+    private static final int HEIGHT = 5;
     private static final BufferedImage IMG = getImg("img/bullet/StraightBullet.png");
 
     public StraightBullet(int x, int y) {
-        this(x, y, Unit.NORTH);
+        //        this(x, y, Unit.NORTH);
+        this(x, y, -1);
     }
 
     protected StraightBullet(int x, int y, int direction) {
-        super(x, y, direction);
+        super(x, y, WIDTH, HEIGHT, direction);
     }
 
     @Override
-    protected int getWidth() {
-        return 5;
+    public int getWidth() {
+        return WIDTH;
     }
 
     @Override
-    protected int getHeight() {
-        return 5;
+    public int getHeight() {
+        return HEIGHT;
     }
 
     @Override
@@ -39,15 +43,5 @@ public class StraightBullet extends Bullet {
     @Override
     protected int rate() {
         return 10;
-    }
-
-    @Override
-    protected int direction() {
-        return Unit.NORTH;
-    }
-
-    @Override
-    public String getBulletName() {
-        return "StraightBullet";
     }
 }

@@ -29,12 +29,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -62,12 +62,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -95,12 +95,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -128,12 +128,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -161,12 +161,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -195,12 +195,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -229,12 +229,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -263,12 +263,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -297,12 +297,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };
@@ -335,12 +335,12 @@ public class UnitTest {
             }
 
             @Override
-            protected int getWidth() {
+            public int getWidth() {
                 return 0;
             }
 
             @Override
-            protected int getHeight() {
+            public int getHeight() {
                 return 0;
             }
         };

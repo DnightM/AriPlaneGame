@@ -7,10 +7,8 @@ import unit.Unit;
 public class Enemy1 extends Enemy {
     private static final BufferedImage IMG = getImg("img/enemy/enemy1.png");
 
-    private int health = 5; // 체력
-
     public Enemy1(int x, int y) {
-        super(x, y, Unit.SOUTH);
+        super(x, y, Unit.STAY);
     }
 
     @Override
@@ -19,12 +17,12 @@ public class Enemy1 extends Enemy {
     }
 
     @Override
-    protected int getWidth() {
+    public int getWidth() {
         return 20;
     }
 
     @Override
-    protected int getHeight() {
+    public int getHeight() {
         return 20;
     }
 
@@ -36,5 +34,10 @@ public class Enemy1 extends Enemy {
     @Override
     public String getBulletName() {
         return "EnemyStraightBullet";
+    }
+
+    @Override
+    protected int maxLife() {
+        return 10;
     }
 }

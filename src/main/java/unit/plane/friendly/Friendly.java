@@ -13,7 +13,6 @@ public abstract class Friendly extends Plane {
 
     public Friendly(int x, int y) {
         super(x, y, Unit.STAY);
-
     }
 
     public final KeyAdapter getKeyAdapter() {

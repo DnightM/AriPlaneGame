@@ -1,4 +1,4 @@
-package unit.bullet;
+package unit.bullet.straight;
 
 import unit.Unit;
 

@@ -1,5 +1,9 @@
 package unit.bullet;
 
+import unit.bullet.spread.SpreadBullet;
+import unit.bullet.straight.EnemyStraightBullet;
+import unit.bullet.straight.StraightBullet;
+
 public class BulletFactory {
     public static Bullet getBullet(String bulletName, int x, int y) throws Exception {
         switch (bulletName) {
@@ -7,6 +11,8 @@ public class BulletFactory {
             return new StraightBullet(x, y);
         case "EnemyStraightBullet":
             return new EnemyStraightBullet(x, y);
+        case "SpreadBullet":
+            return new SpreadBullet(x, y);
         default:
             throw new Exception("Can't find [" + bulletName + "]Bullet");
         }
@@ -18,6 +24,8 @@ public class BulletFactory {
             return StraightBullet.RATE;
         case "EnemyStraightBullet":
             return EnemyStraightBullet.RATE;
+        case "SpreadBullet":
+            return SpreadBullet.RATE;
         default:
             throw new Exception("Can't find [" + bulletName + "]Bullet");
         }

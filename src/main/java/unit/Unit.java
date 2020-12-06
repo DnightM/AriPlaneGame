@@ -9,7 +9,8 @@ import javax.imageio.ImageIO;
 public abstract class Unit {
     private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
     public static final int UNIT_ARR_LENGTH = 100;
-    
+
+    // TODO 언젠가 360도로 변경할 예정 근데 그럼 많이 느릴까?
     public static final int STAY = 0;
     public static final int WEST = 1;
     public static final int NORTH = 2;
@@ -40,9 +41,11 @@ public abstract class Unit {
      */
     protected abstract BufferedImage img();
 
-    protected abstract int getWidth();
+    public abstract int getWidth();
 
-    protected abstract int getHeight();
+    public abstract int getHeight();
+
+    public abstract boolean isCheckCollision();
 
     protected static BufferedImage getImg(String path) {
         try {
@@ -91,6 +94,12 @@ public abstract class Unit {
 
     // life
     public void dead() {
+        // TODO 나중에 디버깅 끝나면 지워야함
+        //        try {
+        //            throw new Exception(this.getClass().getName() + " | dead");
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //        }
         dead = true;
     }
 
@@ -100,8 +109,14 @@ public abstract class Unit {
         pos[1] = y;
     }
 
+    int degree = 360;
     // Move
     public void move() {
+        if (direction < 0) {
+            pos[0] += getPos(degree)[0];
+            pos[1] += getPos(degree)[1];
+            return;
+        }
         for (int i = 0; i < 4; i++) {
             int t = 1 << i;
             if ((direction & t) > 0) {
@@ -120,5 +135,12 @@ public abstract class Unit {
                 }
             }
         }
+    }
+
+    private double[] getPos(int dgree) {
+        double[] speed = new double[2];
+        speed[0] = Math.sin(Math.toRadians(dgree));
+        speed[1] = Math.cos(Math.toRadians(dgree));
+        return speed;
     }
 }
