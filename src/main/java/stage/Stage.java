@@ -16,21 +16,29 @@ import unit.plane.friendly.Friendly;
 import util.TimeChecker;
 
 @SuppressWarnings("serial")
-public class Stage extends JPanel {
-    private static final int UNIT_ARR_LENGTH = Unit.UNIT_ARR_LENGTH;
+public abstract class Stage extends JPanel {
+    private static final int FRIENDLY_MAX_COUNT = 3;
+    private static final int ENEMY_MAX_COUNT = 100;
+
     private TimeChecker tc = new TimeChecker("drawer");
 
     private static BufferedImage BACK_GROUND_IMG;
     private int width;
     private int height;
     protected Friendly[] friendlyArr;
-    public Enemy[] enemyArr;
+    protected Enemy[] enemyArr;
 
-    public Stage(int width, int height, Friendly[] friendlyArr) {
+    /**
+     * 적기 등의 스테이지 시나리오 정의
+     */
+    public abstract void init();
+
+    public Stage(int width, int height) {
         this.width = width;
         this.height = height;
-        this.friendlyArr = friendlyArr;
-        this.enemyArr = new Enemy[UNIT_ARR_LENGTH];
+        this.friendlyArr = new Friendly[FRIENDLY_MAX_COUNT];
+        this.enemyArr = new Enemy[ENEMY_MAX_COUNT];
+
         try {
             BACK_GROUND_IMG = ImageIO.read(getClass().getClassLoader().getResourceAsStream("img/background.png"));
         } catch (IOException e) {
@@ -64,7 +72,12 @@ public class Stage extends JPanel {
                 unit.dead();
                 continue;
             }
-            unit.move();
+            if (unit.isGuided()) {
+                Unit opponent = unit.findProximate(opponentArr);
+                unit.move(opponent);
+            } else {
+                unit.move();
+            }
             checkCollision(unit, opponentArr); // 충돌검사
             if (unit.hasSubUnit()) {
                 moveUnit(unit.getSubUnitArr(), opponentArr);
@@ -143,5 +156,9 @@ public class Stage extends JPanel {
             }
             drawUnit(g2d, unit);
         }
+    }
+
+    public Friendly[] getFriendlyArr() {
+        return friendlyArr;
     }
 }

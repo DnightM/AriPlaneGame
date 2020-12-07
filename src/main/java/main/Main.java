@@ -4,10 +4,9 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import stage.Stage;
-import stage.Stage1;
+import stage.Stage3;
 import ui.Window;
 import unit.plane.friendly.Friendly;
-import unit.plane.friendly.Friendly1;
 import util.TimeChecker;
 
 public class Main {
@@ -15,14 +14,11 @@ public class Main {
         try {
             Window win = new Window();
 
-            Friendly[] friendlyArr = new Friendly[3];
-            friendlyArr[0] = new Friendly1(500, 900);
-
-            Stage1 stage = new Stage1(win.panelWidth, win.panelHeight, friendlyArr);
+            Stage stage = new Stage3(win.panelWidth, win.panelHeight);
             stage.init();
 
             win.setPanel(stage);
-            for (Friendly friendly : friendlyArr) {
+            for (Friendly friendly : stage.getFriendlyArr()) {
                 if (friendly == null) {
                     break;
                 }

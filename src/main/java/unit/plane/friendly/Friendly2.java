@@ -2,11 +2,11 @@ package unit.plane.friendly;
 
 import java.awt.image.BufferedImage;
 
-public class Friendly1 extends Friendly {
-    private String[] bulletNames = new String[] { "StraightBullet" };
+public class Friendly2 extends Friendly {
+    private String[] bulletNames = new String[] { "GuidedBullet", "SpreadBullet" };
     private static final BufferedImage IMG = getImg("img/plane/firstPlane.png");
 
-    public Friendly1(int x, int y) {
+    public Friendly2(int x, int y) {
         super(x, y);
     }
 

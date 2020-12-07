@@ -9,7 +9,7 @@ import unit.plane.Plane;
 public abstract class Friendly extends Plane {
     public int direction = Unit.STAY;
 
-    public abstract void setBulletName(String bulletName);
+    public abstract void setBulletNames(String[] bulletNames);
 
     public Friendly(int x, int y) {
         super(x, y, Unit.STAY);

@@ -1,6 +1,11 @@
 package util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TimeChecker {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private long time = 0, count = 0, calcuratorTime = 0, before;
     private String name;
 
@@ -11,7 +16,8 @@ public class TimeChecker {
     public void timeCheckerEnd() {
         calcuratorTime += System.currentTimeMillis() - time;
         if (time / 1000 != before) {
-            System.out.println(name + " | time:" + time + " | " + "frame:" + count + " | calcuratorTime: " + calcuratorTime);
+            String msg = String.format("%s | millis:%d | frame:% 4d | calTime:% 5d", name, time, count, calcuratorTime);
+            logger.info(msg);
             count = 0;
             calcuratorTime = 0;
         }

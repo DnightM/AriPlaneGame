@@ -12,8 +12,7 @@ public class StraightBullet extends Bullet {
     private static final BufferedImage IMG = getImg("img/bullet/StraightBullet.png");
 
     public StraightBullet(int x, int y) {
-        //        this(x, y, Unit.NORTH);
-        this(x, y, -1);
+        this(x, y, Unit.NORTH);
     }
 
     protected StraightBullet(int x, int y, int direction) {

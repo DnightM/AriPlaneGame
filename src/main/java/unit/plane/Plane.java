@@ -1,11 +1,16 @@
 package unit.plane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import unit.Unit;
 import unit.bullet.Bullet;
 import unit.bullet.BulletFactory;
 
 public abstract class Plane extends Unit {
-    public abstract String getBulletName();// TODO 나중엔 int로 바꾸는게 어떨까함 속도가 문제 된다면.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public abstract String[] getBulletNames();// TODO 나중엔 int로 바꾸는게 어떨까함 속도가 문제 된다면.
 
     private final Bullet[] bulletArr;
     private int bulletRateCount = 0;
@@ -75,28 +80,31 @@ public abstract class Plane extends Unit {
         super.move();
         bulletRateCount++;
         try {
-            if (bulletRateCount % BulletFactory.getBulletRate(getBulletName()) == 0) {
-                try {
-                    Unit[] unitArr = getSubUnitArr();
-                    Bullet bullet = (Bullet) unitArr[bulletArrIdx];
-                    int x = getX() + getWidth() / 2;
-                    int y = getY() + getHeight() / 2;
-                    if (bullet != null) {
-                        // 총알이 나오는 위치
-                        if (bullet.getClass().getSimpleName().equals(getBulletName())) {
-                            if (bullet.isDead()) {
-                                bullet.alive(x, y);
-                                return;
-                            } else {
-                                // 배열 크기 이상의 총알이 살아있다는 의미. 총알 배열 크기를 늘려줘야함
-                                throw new Exception("Bullet Alive");
+            String[] bulletNames = getBulletNames();
+            for (String bulletName : bulletNames) {
+                if (bulletRateCount % BulletFactory.getBulletRate(bulletName) == 0) {
+                    try {
+                        Unit[] unitArr = getSubUnitArr();
+                        Bullet bullet = (Bullet) unitArr[bulletArrIdx];
+                        int x = getX() + getWidth() / 2;
+                        int y = getY() + getHeight() / 2;
+                        if (bullet != null) {
+                            // 총알이 나오는 위치
+                            if (bullet.getClass().getSimpleName().equals(bulletName)) {
+                                if (bullet.isDead()) {
+                                    bullet.alive(x, y);
+                                    return;
+                                } else {
+                                    // 배열 크기 이상의 총알이 살아있다는 의미. 총알 배열 크기를 늘려줘야함
+                                    logger.error("bullet already alive. didn't die. skip resurrection.");
+                                }
                             }
                         }
-                    }
-                    unitArr[bulletArrIdx] = BulletFactory.getBullet(getBulletName(), x, y);
-                } finally {
-                    if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
-                        bulletArrIdx = 0;
+                        unitArr[bulletArrIdx] = BulletFactory.getBullet(bulletName, x, y);
+                    } finally {
+                        if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
+                            bulletArrIdx = 0;
+                        }
                     }
                 }
             }

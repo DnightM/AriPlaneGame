@@ -11,8 +11,6 @@ public class GuidedBullet extends Bullet {
     private static final int HEIGHT = 5;
     private static final BufferedImage IMG = getImg("img/bullet/StraightBullet.png");
 
-    private int controller = 0;
-
     public GuidedBullet(int x, int y) {
         super(x, y, WIDTH, HEIGHT, Unit.NORTH);
     }
@@ -42,12 +40,7 @@ public class GuidedBullet extends Bullet {
         return HEIGHT;
     }
 
-    @Override
-    public void move() {
-        super.move();
-        controller++;
-        if (controller > 50) {
-            
-        }
+    public boolean isGuided() {
+        return true;
     }
 }

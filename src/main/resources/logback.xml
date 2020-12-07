@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- xml 작성 참고 사이트 : http://jeong-pro.tistory.com/154 -->
+<!-- 특수문자 : https://www.happyjung.com/lecture/1426?sca=HTML&sst=wr_datetime&sod=asc&sop=and&page=5 -->
+<!-- LogPattern = [%d{yyyyMMdd HH:mm:ss}] %msg%n -->
+
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<charset>UTF-8</charset>
+			<Pattern>[%d{yyyyMMdd HHmmss}] [%-5level] %c.%M\(%F:%L\) | %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/plane.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>./log/plane_%i.log
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>20</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>16MB</maxFileSize>
+        </triggeringPolicy>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<charset>UTF-8</charset>
+            <Pattern>[%d{yyyyMMdd HHmmss}] [%-5level] %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+	<logger name="io.netty" level="WARN"/>
+	
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="INFO"/>
+	</root>
+</configuration>
+

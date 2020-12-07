@@ -32,8 +32,8 @@ public class Enemy1 extends Enemy {
     }
 
     @Override
-    public String getBulletName() {
-        return "EnemyStraightBullet";
+    public String[] getBulletNames() {
+        return new String[] { "EnemyStraightBullet" };
     }
 
     @Override

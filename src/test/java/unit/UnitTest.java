@@ -37,6 +37,11 @@ public class UnitTest {
             public int getHeight() {
                 return 0;
             }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
+            }
         };
         for (int i = 0; i < 100; i++) {
             u.move();
@@ -69,6 +74,11 @@ public class UnitTest {
             @Override
             public int getHeight() {
                 return 0;
+            }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
             }
         };
         for (int i = 0; i < 100; i++) {
@@ -103,6 +113,11 @@ public class UnitTest {
             public int getHeight() {
                 return 0;
             }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
+            }
         };
         for (int i = 0; i < 100; i++) {
             u.move();
@@ -136,6 +151,11 @@ public class UnitTest {
             public int getHeight() {
                 return 0;
             }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
+            }
         };
         for (int i = 0; i < 100; i++) {
             u.move();
@@ -168,6 +188,11 @@ public class UnitTest {
             @Override
             public int getHeight() {
                 return 0;
+            }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
             }
         };
         for (int i = 0; i < 100; i++) {
@@ -203,6 +228,11 @@ public class UnitTest {
             public int getHeight() {
                 return 0;
             }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
+            }
         };
         for (int i = 0; i < 100; i++) {
             u.move();
@@ -236,6 +266,11 @@ public class UnitTest {
             @Override
             public int getHeight() {
                 return 0;
+            }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
             }
         };
         for (int i = 0; i < 100; i++) {
@@ -271,6 +306,11 @@ public class UnitTest {
             public int getHeight() {
                 return 0;
             }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
+            }
         };
         for (int i = 0; i < 100; i++) {
             u.move();
@@ -304,6 +344,11 @@ public class UnitTest {
             @Override
             public int getHeight() {
                 return 0;
+            }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
             }
         };
         for (int i = 0; i < 1000; i++) {
@@ -342,6 +387,11 @@ public class UnitTest {
             @Override
             public int getHeight() {
                 return 0;
+            }
+
+            @Override
+            public boolean isCheckCollision() {
+                return false;
             }
         };
         for (int i = 0; i < 1000; i++) {

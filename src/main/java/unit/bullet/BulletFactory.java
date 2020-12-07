@@ -1,5 +1,6 @@
 package unit.bullet;
 
+import unit.bullet.guided.GuidedBullet;
 import unit.bullet.spread.SpreadBullet;
 import unit.bullet.straight.EnemyStraightBullet;
 import unit.bullet.straight.StraightBullet;
@@ -13,6 +14,8 @@ public class BulletFactory {
             return new EnemyStraightBullet(x, y);
         case "SpreadBullet":
             return new SpreadBullet(x, y);
+        case "GuidedBullet":
+            return new GuidedBullet(x, y);
         default:
             throw new Exception("Can't find [" + bulletName + "]Bullet");
         }
@@ -26,6 +29,8 @@ public class BulletFactory {
             return EnemyStraightBullet.RATE;
         case "SpreadBullet":
             return SpreadBullet.RATE;
+        case "GuidedBullet":
+            return GuidedBullet.RATE;
         default:
             throw new Exception("Can't find [" + bulletName + "]Bullet");
         }
