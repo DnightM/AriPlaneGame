@@ -23,8 +23,8 @@ public abstract class Stage extends JPanel {
     private TimeChecker tc = new TimeChecker("drawer");
 
     private static BufferedImage BACK_GROUND_IMG;
-    private int width;
-    private int height;
+    public static int WIDTH;
+    public static int HEIGHT;
     protected Friendly[] friendlyArr;
     protected Enemy[] enemyArr;
 
@@ -34,8 +34,8 @@ public abstract class Stage extends JPanel {
     public abstract void init();
 
     public Stage(int width, int height) {
-        this.width = width;
-        this.height = height;
+        WIDTH = width;
+        HEIGHT = height;
         this.friendlyArr = new Friendly[FRIENDLY_MAX_COUNT];
         this.enemyArr = new Enemy[ENEMY_MAX_COUNT];
 
@@ -64,17 +64,25 @@ public abstract class Stage extends JPanel {
             if (unit.isDead()) {
                 continue;
             }
-            if (unit.getX() < 0 || unit.getX() > width) {
-                unit.dead();
-                continue;
-            }
-            if (unit.getY() < 0 || unit.getY() > height) {
-                unit.dead();
-                continue;
+            if (unit instanceof Friendly) {
+
+            } else {
+                if (unit.getX() < 0 || unit.getX() > WIDTH) {
+                    unit.dead();
+                    continue;
+                }
+                if (unit.getY() < 0 || unit.getY() > HEIGHT) {
+                    unit.dead();
+                    continue;
+                }
             }
             if (unit.isGuided()) {
                 Unit opponent = unit.findProximate(opponentArr);
-                unit.move(opponent);
+                if (opponent == null) {
+                    unit.move();
+                } else {
+                    unit.move(opponent);
+                }
             } else {
                 unit.move();
             }
@@ -131,9 +139,9 @@ public abstract class Stage extends JPanel {
     public void paint(Graphics g) {
         tc.timeCheckerStart();
 
-        BufferedImage tempImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage tempImg = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = tempImg.createGraphics();
-        g2d.drawImage(BACK_GROUND_IMG, 0, 0, width, height, 0, 0, BACK_GROUND_IMG.getWidth(), BACK_GROUND_IMG.getHeight(), null);
+        g2d.drawImage(BACK_GROUND_IMG, 0, 0, WIDTH, HEIGHT, 0, 0, BACK_GROUND_IMG.getWidth(), BACK_GROUND_IMG.getHeight(), null);
 
         drawUnit(g2d, friendlyArr);
         drawUnit(g2d, enemyArr);

@@ -69,6 +69,14 @@ public abstract class Unit {
         return toInt(pos[1]);
     }
 
+    protected void setX(int x) {
+        pos[0] = x;
+    }
+
+    protected void setY(int y) {
+        pos[1] = y;
+    }
+
     protected int getTargetX() {
         return getX() + getWidth() / 2;
     }
@@ -111,8 +119,6 @@ public abstract class Unit {
         pos[1] = y;
     }
 
-    int degree = 360;
-
     // Move
     public void move() {
         for (int i = 0; i < 4; i++) {
@@ -141,28 +147,8 @@ public abstract class Unit {
         pos[1] += range[1];
     }
 
-    private double acceleration = 1;
-
-    /**
-     * 적 비행기를 따라가는 루트를 계산하는 함수
-     * 좀더 멋진 포물선을 위해 acceleration 변수를 사용.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @return 
-     */
-    private double[] getPos(int x1, int y1, int x2, int y2) {
-        int y = y2 - y1;
-        int x = (x2 - (int) (Math.abs(y) / (acceleration * 2))) - x1;
-        double radian = Math.atan2(y, x);
-        double xPos = Math.cos(radian) * acceleration;
-        double yPos = Math.sin(radian) * acceleration;
-        acceleration *= 1.005;
-        //        System.out.println(String.format("좌표 : %d %d %d %d", x1, y1, x2, y2));
-        //        System.out.println("각도 : " + radian * 180 / Math.PI);
-        //        System.out.println("radian " + radian);
-        return new double[] { xPos, yPos };
+    protected double[] getPos(int targetX, int targetY, int targetX2, int targetY2) {
+        return null;
     }
 
     public boolean isGuided() {
@@ -190,6 +176,9 @@ public abstract class Unit {
                 range = temp;
                 unit = opponentArr[i];
             }
+        }
+        if (unit.isDead()) {
+            return null;
         }
         return unit;
     }

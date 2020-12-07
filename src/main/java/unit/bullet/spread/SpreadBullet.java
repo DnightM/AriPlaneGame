@@ -8,7 +8,7 @@ import unit.bullet.Bullet;
 
 public class SpreadBullet extends Bullet {
     public static final int RATE = 100;
-    private Bullet[] bulletArr;
+    protected Bullet[] bulletArr;
 
     public SpreadBullet(int x, int y) {
         this(x, y, 0);

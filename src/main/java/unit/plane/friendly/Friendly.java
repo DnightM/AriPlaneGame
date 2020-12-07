@@ -3,10 +3,16 @@ package unit.plane.friendly;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import stage.Stage;
 import unit.Unit;
 import unit.plane.Plane;
 
 public abstract class Friendly extends Plane {
+    private static final Logger logger = LoggerFactory.getLogger(Friendly.class);
+
     public int direction = Unit.STAY;
 
     public abstract void setBulletNames(String[] bulletNames);
@@ -15,6 +21,37 @@ public abstract class Friendly extends Plane {
         super(x, y, Unit.STAY);
     }
 
+    @Override
+    public void dead() {
+        super.dead();
+        logger.info("friendly dead");
+    }
+
+    @Override
+    public void move() {
+        super.move();
+
+        // 아래 if 4개는 stage에서 정의된 width height 범위를 비행기가 넘어가지 못하도록 제한하는 역할을 함.
+        if (getX() < 0) {
+            setX(0);
+        }
+        int width = Stage.WIDTH - getWidth();
+        if (getX() > width) {
+            setX(width);
+        }
+        if (getY() < 0) {
+            setY(0);
+        }
+        int height = Stage.HEIGHT - getHeight();
+        if (getY() > height) {
+            setY(height);
+        }
+    }
+
+    /**
+     * 키보드로 비행기를 조정할 수 있도록 하는 keyAdapter
+     * @return
+     */
     public final KeyAdapter getKeyAdapter() {
         return new KeyAdapter() {
             /*  37=left
@@ -90,7 +127,6 @@ public abstract class Friendly extends Plane {
                     break;
                 }
             }
-
         };
     }
 }

@@ -33,7 +33,7 @@ public class Enemy2 extends Enemy {
 
     @Override
     public String[] getBulletNames() {
-        return new String[] { "SpreadBullet" };
+        return new String[] { "EnemySpreadBullet" };
     }
 
     @Override

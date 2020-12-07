@@ -86,21 +86,19 @@ public abstract class Plane extends Unit {
                     try {
                         Unit[] unitArr = getSubUnitArr();
                         Bullet bullet = (Bullet) unitArr[bulletArrIdx];
-                        int x = getX() + getWidth() / 2;
-                        int y = getY() + getHeight() / 2;
                         if (bullet != null) {
                             // 총알이 나오는 위치
                             if (bullet.getClass().getSimpleName().equals(bulletName)) {
                                 if (bullet.isDead()) {
-                                    bullet.alive(x, y);
+                                    bullet.alive(getTargetX(), getY());
                                     return;
                                 } else {
                                     // 배열 크기 이상의 총알이 살아있다는 의미. 총알 배열 크기를 늘려줘야함
-                                    logger.error("bullet already alive. didn't die. skip resurrection.");
+                                    logger.error("bullet still alive. didn't die. skip resurrection.");
                                 }
                             }
                         }
-                        unitArr[bulletArrIdx] = BulletFactory.getBullet(bulletName, x, y);
+                        unitArr[bulletArrIdx] = BulletFactory.getBullet(bulletName, getTargetX(), getY());
                     } finally {
                         if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
                             bulletArrIdx = 0;
