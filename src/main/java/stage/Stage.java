@@ -113,9 +113,9 @@ public abstract class Stage extends JPanel {
 
             boolean isCollision = opponent.isCollision(unit);
             if (isCollision) {
-                unit.dead();
+                unit.kill();
                 if (unit instanceof Plane) {
-                    opponent.dead();
+                    opponent.kill();
                 } else if (unit instanceof Bullet) {
                     opponent.setLife(-1);
                 }

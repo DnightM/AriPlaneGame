@@ -34,7 +34,7 @@ public abstract class Plane extends Unit {
     public void setLife(int varianceValue) {
         life += varianceValue;
         if (life < 1) {
-            this.dead();
+            this.kill();
         }
         if (life > maxLife()) {
             life = maxLife();

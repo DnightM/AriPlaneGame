@@ -113,7 +113,7 @@ public abstract class Unit {
     }
 
     // life
-    public void dead() {
+    public void kill() {
         dead = true;
     }
 
@@ -154,6 +154,7 @@ public abstract class Unit {
         double[] range = getGuidedPos(getTargetX(), getTargetY(), opponent.getTargetX(), opponent.getTargetY());
         pos[0] += range[0];
         pos[1] += range[1];
+        move(); // 따라다니는 애들은 Unit.STAY 이기 때문에 특별한 움직임이 추가되진 않음. 대신 각 클래스마다 정의된 move 함수들이 콜됨.
     }
 
     protected double[] getGuidedPos(int targetX, int targetY, int targetX2, int targetY2) {

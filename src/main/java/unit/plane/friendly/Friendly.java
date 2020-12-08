@@ -9,13 +9,12 @@ import org.slf4j.LoggerFactory;
 import stage.Stage;
 import unit.Unit;
 import unit.plane.Plane;
-import unit.plane.friendly.satellite.Satellite;
 
 public abstract class Friendly extends Plane {
     private static final Logger logger = LoggerFactory.getLogger(Friendly.class);
 
     public int direction = Unit.STAY;
-    
+
     public abstract void setBulletNames(String[] bulletNames);
 
     public Friendly(int x, int y) {
@@ -23,8 +22,8 @@ public abstract class Friendly extends Plane {
     }
 
     @Override
-    public void dead() {
-        super.dead();
+    public void kill() {
+        super.kill();
         logger.info("friendly dead");
     }
 
@@ -129,9 +128,5 @@ public abstract class Friendly extends Plane {
                 }
             }
         };
-    }
-
-    public void setSatellite(Satellite satellite) {
-
     }
 }

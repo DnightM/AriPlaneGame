@@ -24,10 +24,10 @@ public abstract class Bullet extends Unit {
     public void move() {
         super.move();
         if (getX() < 0 || getX() > Stage.WIDTH) {
-            dead();
+            kill();
         }
         if (getY() < 0 || getY() > Stage.HEIGHT) {
-            dead();
+            kill();
         }
     }
 }

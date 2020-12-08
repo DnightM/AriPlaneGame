@@ -13,6 +13,12 @@ public class Satellite extends Friendly {
     public Satellite(int x, int y, Friendly friendly) {
         super(x, y);
         this.friendly = friendly;
+
+        // 일정 시간 후에 죽게하는 함수
+        //        TimeThread t = new TimeThread(() -> {
+        //            this.kill();
+        //        }, 10000);
+        //        t.run();
     }
 
     @Override
@@ -71,6 +77,9 @@ public class Satellite extends Friendly {
         double radian = Math.atan2(y, x);
         double xPos = Math.cos(radian);
         double yPos = Math.sin(radian);
+        if (xPos == 1 && yPos == 0) {
+            return new double[] { 0d, 0d };
+        }
         return new double[] { xPos, yPos };
     }
 
