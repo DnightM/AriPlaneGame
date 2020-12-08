@@ -11,7 +11,7 @@ public class GuidedRightBullet extends GuidedBullet {
     }
 
     @Override
-    protected int getDeviation(int y) {
+    protected int getWeight(int y) {
         return -(int) (Math.abs(y) / (acceleration * 2));
     }
 }

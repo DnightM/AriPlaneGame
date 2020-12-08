@@ -46,7 +46,12 @@ public class GuidedBullet extends Bullet {
 
     protected double acceleration = 1;
 
-    protected int getDeviation(int y) {
+    /**
+     * 가중치
+     * @param y
+     * @return 가중치
+     */
+    protected int getWeight(int y) {
         return 0;
     }
 
@@ -60,9 +65,9 @@ public class GuidedBullet extends Bullet {
      * @return 
      */
     @Override
-    protected double[] getPos(int x1, int y1, int x2, int y2) {
+    protected double[] getGuidedPos(int x1, int y1, int x2, int y2) {
         int y = y2 - y1;
-        int x = (x2 + getDeviation(y)) - x1;
+        int x = (x2 + getWeight(y)) - x1;
         double radian = Math.atan2(y, x);
         double xPos = Math.cos(radian) * acceleration;
         double yPos = Math.sin(radian) * acceleration;

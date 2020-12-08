@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Friendly1 extends Friendly {
     private String[] bulletNames = new String[] { "StraightBullet" };
-    private static final BufferedImage IMG = getImg("img/plane/firstPlane.png");
+    private static final BufferedImage IMG = getImg("img/friendly/fristPlane.png");
 
     public Friendly1(int x, int y) {
         super(x, y);

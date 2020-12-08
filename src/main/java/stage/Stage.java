@@ -17,7 +17,7 @@ import util.TimeChecker;
 
 @SuppressWarnings("serial")
 public abstract class Stage extends JPanel {
-    private static final int FRIENDLY_MAX_COUNT = 3;
+    private static final int FRIENDLY_MAX_COUNT = 10;
     private static final int ENEMY_MAX_COUNT = 100;
 
     private TimeChecker tc = new TimeChecker("drawer");
@@ -64,20 +64,8 @@ public abstract class Stage extends JPanel {
             if (unit.isDead()) {
                 continue;
             }
-            if (unit instanceof Friendly) {
-
-            } else {
-                if (unit.getX() < 0 || unit.getX() > WIDTH) {
-                    unit.dead();
-                    continue;
-                }
-                if (unit.getY() < 0 || unit.getY() > HEIGHT) {
-                    unit.dead();
-                    continue;
-                }
-            }
             if (unit.isGuided()) {
-                Unit opponent = unit.findProximate(opponentArr);
+                Unit opponent = unit.getFollowTarget(opponentArr);
                 if (opponent == null) {
                     unit.move();
                 } else {
@@ -111,6 +99,7 @@ public abstract class Stage extends JPanel {
      * @param opponentArr 상대편 객체
      */
     private void checkCollision(Unit unit, Plane[] opponentArr) {
+        // TODO opponentArr이 미리 정렬되어있으면 더 효율적인 검사가 가능. 차후 변경 요망
         for (Plane opponent : opponentArr) {
             if (opponent == null) {
                 return;

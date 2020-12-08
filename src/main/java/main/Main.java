@@ -4,7 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import stage.Stage;
-import stage.Stage3;
+import stage.StageTest;
 import ui.Window;
 import unit.plane.friendly.Friendly;
 import util.TimeChecker;
@@ -14,7 +14,7 @@ public class Main {
         try {
             Window win = new Window();
 
-            Stage stage = new Stage3(win.panelWidth, win.panelHeight);
+            Stage stage = new StageTest(win.panelWidth, win.panelHeight);
             stage.init();
 
             win.setPanel(stage);

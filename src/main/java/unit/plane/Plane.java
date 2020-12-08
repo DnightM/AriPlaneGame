@@ -78,6 +78,16 @@ public abstract class Plane extends Unit {
     @Override
     public void move() {
         super.move();
+        shotBullet();
+    }
+
+    @Override
+    public void move(Unit opponent) {
+        super.move(opponent);
+        shotBullet();
+    }
+
+    private void shotBullet() {
         bulletRateCount++;
         try {
             String[] bulletNames = getBulletNames();

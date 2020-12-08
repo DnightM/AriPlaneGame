@@ -8,7 +8,7 @@ public class Friendly2 extends Friendly {
             "GuidedRightBullet",
             "SpreadBullet"
     };
-    private static final BufferedImage IMG = getImg("img/plane/firstPlane.png");
+    private static final BufferedImage IMG = getImg("img/friendly/firstPlane.png");
 
     public Friendly2(int x, int y) {
         super(x, y);

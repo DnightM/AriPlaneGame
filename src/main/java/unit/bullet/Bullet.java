@@ -1,5 +1,6 @@
 package unit.bullet;
 
+import stage.Stage;
 import unit.Unit;
 
 public abstract class Bullet extends Unit {
@@ -17,5 +18,16 @@ public abstract class Bullet extends Unit {
     @Override
     public void alive(int x, int y) {
         super.alive(x - getWidth() / 2, y);
+    }
+
+    @Override
+    public void move() {
+        super.move();
+        if (getX() < 0 || getX() > Stage.WIDTH) {
+            dead();
+        }
+        if (getY() < 0 || getY() > Stage.HEIGHT) {
+            dead();
+        }
     }
 }

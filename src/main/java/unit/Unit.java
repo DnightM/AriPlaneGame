@@ -45,6 +45,11 @@ public abstract class Unit {
 
     public abstract int getHeight();
 
+    /**
+     * 충돌 검사를 할건지 말건지 결정하는 함수
+     * true면 검사하고 false면 검사하지 않음.
+     * @return 
+     */
     public abstract boolean isCheckCollision();
 
     protected static BufferedImage getImg(String path) {
@@ -86,7 +91,6 @@ public abstract class Unit {
     }
 
     private int toInt(double pos) {
-        //                return (int) pos;
         return (int) Math.round(pos);
     }
 
@@ -141,18 +145,19 @@ public abstract class Unit {
         }
     }
 
+    // 따라가는 움직임을 표현하기 위한 함수들
+    public boolean isGuided() { // 이 함수 return이 true면 move() 함수대신 move(Unit opponent) 함수가 실행됨.
+        return false;
+    }
+
     public void move(Unit opponent) {
-        double[] range = getPos(getTargetX(), getTargetY(), opponent.getTargetX(), opponent.getTargetY());
+        double[] range = getGuidedPos(getTargetX(), getTargetY(), opponent.getTargetX(), opponent.getTargetY());
         pos[0] += range[0];
         pos[1] += range[1];
     }
 
-    protected double[] getPos(int targetX, int targetY, int targetX2, int targetY2) {
+    protected double[] getGuidedPos(int targetX, int targetY, int targetX2, int targetY2) {
         return null;
-    }
-
-    public boolean isGuided() {
-        return false;
     }
 
     /**
@@ -160,7 +165,7 @@ public abstract class Unit {
      * @param opponentArr 적비행기 배열
      * @return 가장 가까운 적 비행기
      */
-    public Unit findProximate(Unit[] opponentArr) {
+    public Unit getFollowTarget(Unit[] opponentArr) {
         Unit unit = opponentArr[0];
         int range = calRange(getX(), getY(), opponentArr[0].getX(), opponentArr[0].getY());
         int len = opponentArr.length;
