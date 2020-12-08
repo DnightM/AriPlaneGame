@@ -7,13 +7,15 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 
+import game.Point;
+import game.unit.Unit;
+
 public class UnitTest {
-    private int x = 100;
-    private int y = 100;
+    private Point pos = new Point(100, 100);
 
     @Test
     public void moveTest1() {
-        Unit u = new Unit(x, y, Unit.WEST) {
+        Unit u = new Unit(pos, Unit.WEST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -51,7 +53,7 @@ public class UnitTest {
 
     @Test
     public void moveTest2() {
-        Unit u = new Unit(x, y, Unit.NORTH) {
+        Unit u = new Unit(pos, Unit.NORTH) {
             @Override
             public void draw(Graphics g) {
             }
@@ -89,7 +91,7 @@ public class UnitTest {
 
     @Test
     public void moveTest3() {
-        Unit u = new Unit(x, y, Unit.EAST) {
+        Unit u = new Unit(pos, Unit.EAST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -127,7 +129,7 @@ public class UnitTest {
 
     @Test
     public void moveTest4() {
-        Unit u = new Unit(x, y, Unit.SOUTH) {
+        Unit u = new Unit(pos, Unit.SOUTH) {
             @Override
             public void draw(Graphics g) {
             }
@@ -165,7 +167,7 @@ public class UnitTest {
 
     @Test
     public void moveTest5() {
-        Unit u = new Unit(x, y, Unit.NORTH_WEST) {
+        Unit u = new Unit(pos, Unit.NORTH_WEST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -198,13 +200,13 @@ public class UnitTest {
         for (int i = 0; i < 100; i++) {
             u.move();
         }
-        assertEquals(u.getX(), calDiagonal(x, -10));
-        assertEquals(u.getY(), calDiagonal(x, -10));
+        assertEquals(u.getX(), calDiagonal(100, -10));
+        assertEquals(u.getY(), calDiagonal(100, -10));
     }
 
     @Test
     public void moveTest6() {
-        Unit u = new Unit(x, y, Unit.SOUTH_WEST) {
+        Unit u = new Unit(pos, Unit.SOUTH_WEST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -237,13 +239,13 @@ public class UnitTest {
         for (int i = 0; i < 100; i++) {
             u.move();
         }
-        assertEquals(u.getX(), calDiagonal(x, -10));
-        assertEquals(u.getY(), calDiagonal(x, 10));
+        assertEquals(u.getX(), calDiagonal(100, -10));
+        assertEquals(u.getY(), calDiagonal(100, 10));
     }
 
     @Test
     public void moveTest7() {
-        Unit u = new Unit(x, y, Unit.NORTH_EAST) {
+        Unit u = new Unit(pos, Unit.NORTH_EAST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -276,13 +278,13 @@ public class UnitTest {
         for (int i = 0; i < 100; i++) {
             u.move();
         }
-        assertEquals(u.getX(), calDiagonal(x, 10));
-        assertEquals(u.getY(), calDiagonal(x, -10));
+        assertEquals(u.getX(), calDiagonal(100, 10));
+        assertEquals(u.getY(), calDiagonal(100, -10));
     }
 
     @Test
     public void moveTest8() {
-        Unit u = new Unit(x, y, Unit.SOUTH_EAST) {
+        Unit u = new Unit(pos, Unit.SOUTH_EAST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -315,13 +317,13 @@ public class UnitTest {
         for (int i = 0; i < 100; i++) {
             u.move();
         }
-        assertEquals(u.getX(), calDiagonal(x, 10));
-        assertEquals(u.getY(), calDiagonal(x, 10));
+        assertEquals(u.getX(), calDiagonal(100, 10));
+        assertEquals(u.getY(), calDiagonal(100, 10));
     }
 
     @Test
     public void moveTest9() {
-        Unit u = new Unit(x, y, Unit.SOUTH_EAST) {
+        Unit u = new Unit(pos, Unit.SOUTH_EAST) {
             @Override
             public void draw(Graphics g) {
             }
@@ -364,7 +366,7 @@ public class UnitTest {
 
     @Test
     public void moveTest10() {
-        Unit u = new Unit(x, y, Unit.SOUTH_WEST) {
+        Unit u = new Unit(pos, Unit.SOUTH_WEST) {
             @Override
             public void draw(Graphics g) {
             }
