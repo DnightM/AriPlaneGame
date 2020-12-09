@@ -24,7 +24,7 @@ public class SpreadBullet extends Bullet {
         bulletArr[7] = new SpreadSubBullet(pos, Unit.NORTH_WEST);
     }
 
-    public SpreadBullet(Point pos, int direction) {
+    public SpreadBullet(Point pos, double direction) {
         super(pos, 0, 0, direction);
     }
 

@@ -8,7 +8,7 @@ public class Main {
         try {
             Window win = new Window();
 
-            Stage stage = new Stage1(win.panelWidth, win.panelHeight);
+            Stage stage = new Stage5(win.panelWidth, win.panelHeight);
             stage.init();
 
             win.setPanel(stage);

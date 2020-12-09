@@ -3,15 +3,17 @@ package game.unit.plane.friendly.satellite;
 import java.awt.image.BufferedImage;
 
 import game.Point;
+import game.unit.Unit;
 import game.unit.plane.friendly.Friendly;
 
 public class Satellite extends Friendly {
     private static final String[] BULLET_NAMES = new String[] { "StraightBullet" };
     private static final BufferedImage IMG = getImg("img/satellite/satellite.png");
+    private final Friendly friendly;
 
     public Satellite(Point pos, Friendly friendly) {
         super(pos);
-        setGuidedTarget(friendly);
+        this.friendly = friendly;
 
         // 일정 시간 후에 죽게하는 함수
         //        TimeThread t = new TimeThread(() -> {
@@ -67,6 +69,18 @@ public class Satellite extends Friendly {
 
     protected int satellitePosition() {
         return 0;
+    }
+
+    @Override
+    public Unit getGuidedTarget(Unit[] opponentArr) {
+        return friendly;
+    }
+
+    @Override
+    public void move() {
+        double[] sw = getGuidedPos(getCenterPos(), friendly.getCenterPos());
+        super.directMove(sw[0], sw[1]);
+        shotBullet();
     }
 
     @Override

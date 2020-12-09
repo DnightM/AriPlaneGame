@@ -2,8 +2,12 @@ package game.stage;
 
 import game.Point;
 import game.scenario.Scenario;
+import game.scenario.ScenarioBreak;
+import game.scenario.ScenarioStraight;
 import game.unit.plane.enemy.*;
 import game.unit.plane.friendly.*;
+import game.unit.plane.friendly.satellite.SatelliteLeft;
+import game.unit.plane.friendly.satellite.SatelliteRight;
 
 @SuppressWarnings("serial")
 public class Stage5 extends Stage {
@@ -13,12 +17,17 @@ public class Stage5 extends Stage {
 
     @Override
     public void init() {
-        friendlyArr[0] = new Friendly1(new Point(500, 900));
-        for (int i = 0; i < 1; i += 2) {
-            Enemy e = new Enemy1(new Scenario(100));
-            Enemy e1 = new Enemy2(new Scenario(0));
+        friendlyArr[0] = new Friendly2(new Point(500, 900));
+        friendlyArr[1] = new SatelliteLeft(new Point(500, 900), friendlyArr[0]);
+        friendlyArr[2] = new SatelliteRight(new Point(500, 900), friendlyArr[0]);
+
+        for (int i = 0; i < 10; i++) {
+            Enemy1 e = new Enemy1(new ScenarioStraight(0L, 100 * i));
             enemyArr[i] = e;
-            enemyArr[i + 1] = e1;
+        }
+        for (int i = 10; i < 20; i++) {
+            Enemy2 e = new Enemy2(new ScenarioBreak(0L, 100 * (i - 10) + 50, 500, (i & 1) > 0));
+            enemyArr[i] = e;
         }
     }
 }

@@ -7,7 +7,7 @@ import game.Point;
 public class EnemySpreadSubBullet extends SpreadSubBullet {
     private static final BufferedImage IMG = getImg("img/bullet/EnemyBullet.png");
 
-    public EnemySpreadSubBullet(Point pos, int direction) {
+    public EnemySpreadSubBullet(Point pos, double direction) {
         super(pos, direction);
     }
 

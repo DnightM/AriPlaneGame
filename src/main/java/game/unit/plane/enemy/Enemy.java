@@ -7,7 +7,7 @@ import game.unit.plane.Plane;
 public abstract class Enemy extends Plane {
     private Scenario sc;
 
-    public Enemy(Scenario sc, int direction) {
+    public Enemy(Scenario sc, double direction) {
         super(sc.getStartPos(), direction);
         this.sc = sc;
     }
@@ -15,12 +15,13 @@ public abstract class Enemy extends Plane {
     @Override
     public void move() {
         double[] sw = sc.move(pos);
-        super.directMove(sw[0], sw[1]);
+        super.directMove(sw[0] * speed(), sw[1] * speed());
         if (getX() > Stage.WIDTH || getX() < 0) {
             kill();
         }
         if (getY() > Stage.HEIGHT) {
             kill();
         }
+        shotBullet();
     }
 }

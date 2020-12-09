@@ -32,16 +32,6 @@ public class Friendly2 extends Friendly {
     }
 
     @Override
-    public int getWidth() {
-        return 20;
-    }
-
-    @Override
-    public int getHeight() {
-        return 20;
-    }
-
-    @Override
     protected double speed() {
         return 2d;
     }

@@ -10,7 +10,7 @@ public class SpreadSubBullet extends Bullet {
     private static final int HEIGHT = 3;
     private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
 
-    public SpreadSubBullet(Point pos, int direction) {
+    public SpreadSubBullet(Point pos, double direction) {
         super(pos, WIDTH, HEIGHT, direction);
     }
 

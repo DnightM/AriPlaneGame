@@ -85,7 +85,7 @@ public abstract class Stage extends JPanel {
                 continue;
             }
             if (unit.isGuided()) {
-                Unit opponent = getGuidedTarget(unit, opponentArr);
+                Unit opponent = unit.getGuidedTarget(opponentArr);
                 unit.setGuidedTarget(opponent);
             }
             unit.move();
@@ -138,34 +138,6 @@ public abstract class Stage extends JPanel {
                 break;
             }
         }
-    }
-
-    /**
-     * 가장 가까운 적비행기를 찾는 알고리즘
-     * @param opponentArr 적비행기 배열
-     * @return 가장 가까운 적 비행기
-     */
-    private Unit getGuidedTarget(Unit unit, Unit[] opponentArr) {
-        Unit opponent = opponentArr[0];
-        int range = unit.getCenterPos().calRange(opponentArr[0].getCenterPos());
-        int len = opponentArr.length;
-        for (int i = 1; i < len; i++) {
-            if (opponentArr[i] == null) {
-                break;
-            }
-            if (opponentArr[i].isDead()) {
-                continue;
-            }
-            int temp = unit.getCenterPos().calRange(opponentArr[i].getCenterPos());
-            if (temp < range) {
-                range = temp;
-                opponent = opponentArr[i];
-            }
-        }
-        if (opponent.isDead()) {
-            return null;
-        }
-        return opponent;
     }
 
     @Override

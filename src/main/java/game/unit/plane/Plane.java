@@ -17,7 +17,7 @@ public abstract class Plane extends Unit {
     private int bulletRateCount = 0;
     private int bulletArrIdx = 0;
 
-    public Plane(Point pos, int direction) {
+    public Plane(Point pos, double direction) {
         super(pos, direction);
         bulletArr = new Bullet[UNIT_ARR_LENGTH];
         life = maxLife();
@@ -76,19 +76,7 @@ public abstract class Plane extends Unit {
         return true;
     }
 
-    @Override
-    public void move() {
-        super.move();
-        shotBullet();
-    }
-
-    @Override
-    public void directMove(double xsw, double ysw) {
-        super.directMove(xsw, ysw);
-        shotBullet();
-    }
-
-    private void shotBullet() {
+    protected void shotBullet() {
         bulletRateCount++;
         try {
             String[] bulletNames = getBulletNames();

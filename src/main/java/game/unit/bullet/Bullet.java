@@ -5,7 +5,7 @@ import game.stage.Stage;
 import game.unit.Unit;
 
 public abstract class Bullet extends Unit {
-    public Bullet(Point pos, int width, int height, int direction) {
+    public Bullet(Point pos, int width, int height, double direction) {
         super(new Point(pos.x - width / 2, pos.y), direction);
     }
 

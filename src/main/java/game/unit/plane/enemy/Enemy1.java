@@ -29,7 +29,7 @@ public class Enemy1 extends Enemy {
 
     @Override
     protected double speed() {
-        return 0.3d;
+        return 1d;
     }
 
     @Override

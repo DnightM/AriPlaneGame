@@ -7,26 +7,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import game.Point;
+import game.unit.plane.friendly.Friendly;
 
 public abstract class Unit {
-    private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
     public static final int UNIT_ARR_LENGTH = 300; // 적군 개수 limit, 기체당 총알 개수 limit. 공용으로 씀
 
     // TODO 언젠가 360도로 변경할 예정 근데 그럼 많이 느릴까?
-    public static final int STAY = 0;
-    public static final int WEST = 1;
-    public static final int NORTH = 2;
-    public static final int EAST = 4;
-    public static final int SOUTH = 8;
-    public static final int NORTH_WEST = 3;
-    public static final int NORTH_EAST = 6;
-    public static final int SOUTH_WEST = 9;
-    public static final int SOUTH_EAST = 12;
+    public static final double STAY = -1;
+    public static final double EAST = Math.toRadians(0);
+    public static final double SOUTH = Math.toRadians(90);
+    public static final double WEST = Math.toRadians(180);
+    public static final double NORTH = Math.toRadians(270);
+    public static final double SOUTH_EAST = Math.toRadians(45);
+    public static final double SOUTH_WEST = Math.toRadians(135);
+    public static final double NORTH_WEST = Math.toRadians(225);
+    public static final double NORTH_EAST = Math.toRadians(315);
 
     protected Point pos;
-    private int direction; // 1:서, 2:북, 4:동, 8:남, 3:북서, 9:남서, 6:북동, 12:남동
+    private double direction;
 
-    public Unit(Point pos, int direction) {
+    public Unit(Point pos, double direction) {
         this.pos = pos;
         this.direction = direction;
     }
@@ -89,7 +89,8 @@ public abstract class Unit {
     }
 
     // Direction
-    public void setDirection(int direction) {
+    public void setDirection(double direction) {
+        // 1:서, 2:북, 4:동, 8:남, 3:북서, 9:남서, 6:북동, 12:남동
         this.direction = direction;
     }
 
@@ -127,32 +128,13 @@ public abstract class Unit {
             guidedMove();
             return;
         }
-        for (int i = 0; i < 4; i++) {
-            int t = 1 << i;
-            if ((direction & t) > 0) {
-                double speed = speed();
-                if (direction != t) {
-                    // 대각선이므로 대각선 비율을 곱해줌
-                    speed *= DIAGONAL_WIGHT;
-                }
-                // i=0,1, i=2,3
-                if (i < 2) {
-                    // 짝수면 x
-                    if ((i & 1) == 0) {
-                        directMove(-speed, 0);
-                    } else {
-                        directMove(0, -speed);
-                    }
-                } else {
-                    // 홀수면 y
-                    if ((i & 1) == 0) {
-                        directMove(speed, 0);
-                    } else {
-                        directMove(0, speed);
-                    }
-                }
-            }
+        if (direction == -1) {
+            // Unit.STAY
+            return;
         }
+        double xPos = Math.cos(direction) * speed();
+        double yPos = Math.sin(direction) * speed();
+        directMove(xPos, yPos);
     }
 
     // 따라가는 움직임을 표현하기 위한 함수들
@@ -168,10 +150,39 @@ public abstract class Unit {
     }
 
     public void setGuidedTarget(Unit opponent) {
-        guidedTargetOpponent = opponent;
+        this.guidedTargetOpponent = opponent;
     }
 
     protected double[] getGuidedPos(Point pos1, Point pos2) {
         return null;
+    }
+
+    /**
+     * 가장 가까운 적비행기를 찾는 알고리즘
+     * @param opponentArr 적비행기 배열
+     * @return 가장 가까운 적 비행기
+     */
+    public Unit getGuidedTarget(Unit[] opponentArr) {
+        // Unit 클래스에 있어야만 위성 유닛이 아군기를 타켓으로 지정할 수 있음.
+        Unit opponent = opponentArr[0];
+        int range = getCenterPos().calRange(opponentArr[0].getCenterPos());
+        int len = opponentArr.length;
+        for (int i = 1; i < len; i++) {
+            if (opponentArr[i] == null) {
+                break;
+            }
+            if (opponentArr[i].isDead()) {
+                continue;
+            }
+            int temp = getCenterPos().calRange(opponentArr[i].getCenterPos());
+            if (temp < range) {
+                range = temp;
+                opponent = opponentArr[i];
+            }
+        }
+        if (opponent.isDead()) {
+            return null;
+        }
+        return opponent;
     }
 }
