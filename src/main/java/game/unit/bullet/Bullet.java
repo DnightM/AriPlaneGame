@@ -22,8 +22,8 @@ public abstract class Bullet extends Unit {
     }
 
     @Override
-    public void move(double xsw, double ysw) {
-        super.move(xsw, ysw);
+    public void move() {
+        super.move();
         if (getX() < 0 || getX() > Stage.WIDTH) {
             kill();
         }

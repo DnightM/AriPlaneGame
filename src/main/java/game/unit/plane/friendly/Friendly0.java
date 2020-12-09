@@ -4,11 +4,11 @@ import java.awt.image.BufferedImage;
 
 import game.Point;
 
-public class Friendly1 extends Friendly {
-    private String[] bulletNames = new String[] { "StraightBullet" };
+public class Friendly0 extends Friendly {
+    private String[] bulletNames = new String[] { "" };
     private static final BufferedImage IMG = getImg("img/friendly/firstPlane.png");
 
-    public Friendly1(Point pos) {
+    public Friendly0(Point pos) {
         super(pos);
     }
 

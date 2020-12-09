@@ -29,9 +29,8 @@ public abstract class Friendly extends Plane {
     }
 
     @Override
-    public void move(double xsw, double ysw) {
-        super.move(xsw, ysw);
-
+    public void move() {
+        super.move();
         // 아래 if 4개는 stage에서 정의된 width height 범위를 비행기가 넘어가지 못하도록 제한하는 역할을 함.
         if (getX() < 0) {
             setX(0);
@@ -53,7 +52,7 @@ public abstract class Friendly extends Plane {
      * 키보드로 비행기를 조정할 수 있도록 하는 keyAdapter
      * @return
      */
-    public final KeyAdapter getKeyAdapter() {
+    public KeyAdapter getKeyAdapter() {
         return new KeyAdapter() {
             /*  37=left
              *  38=right

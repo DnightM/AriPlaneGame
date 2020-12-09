@@ -1,22 +1,50 @@
 package game.scenario;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import game.Point;
 
-public class Scenario extends TimerTask {
-    private boolean isDelayDone = false;
-    
+public class Scenario {
+    private static final double[] STAY = new double[] { 0d, 0d };
+
+    private long delay;
+    private int posIdx = 1;
+
+    protected Point[] poses = new Point[] {
+            new Point(100, 100),
+            new Point(200, 200),
+            new Point(100, 100),
+            new Point(200, 200),
+            new Point(100, 100),
+    };
+
     public Scenario(long delay) {
-        Timer t = new Timer();
-        t.schedule(this, delay);
+        this.delay = delay;
     }
 
-    public boolean isDelayDone() {
-        return isDelayDone;
+    public Point getStartPos() {
+        return poses[0];
     }
 
-    @Override
-    public void run() {
-        isDelayDone = true;
+    protected double[] getGuidedPos(Point pos1, Point pos2) {
+        int x = pos2.getX() - pos1.getX();
+        int y = pos2.getY() - pos1.getY();
+        if (x == 0 && y == 0) {
+            posIdx++;
+            return STAY;
+        }
+        double radian = Math.atan2(y, x);
+        double xPos = Math.cos(radian);
+        double yPos = Math.sin(radian);
+        return new double[] { xPos, yPos };
+    }
+
+    public double[] move(Point pos) {
+        if (delay > 0) {
+            delay--;
+            return STAY;
+        }
+        if (posIdx == poses.length) {
+            return STAY;
+        }
+        return getGuidedPos(pos, poses[posIdx]);
     }
 }

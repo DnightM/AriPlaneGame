@@ -2,8 +2,11 @@ package game.stage;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -47,6 +50,18 @@ public abstract class Stage extends JPanel {
     }
 
     public void run() {
+        TimeChecker tc = new TimeChecker("worker");
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        executor.scheduleAtFixedRate(() -> {
+            tc.timeCheckerStart();
+
+            move();
+
+            tc.timeCheckerEnd();
+        }, 0, 1000 / 120, TimeUnit.MILLISECONDS);
+    }
+
+    private void move() {
         try {
             moveUnit(friendlyArr, enemyArr);
             moveUnit(enemyArr, friendlyArr);
@@ -65,15 +80,10 @@ public abstract class Stage extends JPanel {
                 continue;
             }
             if (unit.isGuided()) {
-                Unit opponent = unit.getFollowTarget(opponentArr);
-                if (opponent == null) {
-                    unit.move();
-                } else {
-                    unit.move(opponent);
-                }
-            } else {
-                unit.move();
+                Unit opponent = getGuidedTarget(unit, opponentArr);
+                unit.setGuidedTarget(opponent);
             }
+            unit.move();
             checkCollision(unit, opponentArr); // 충돌검사
             if (unit.hasSubUnit()) {
                 moveUnit(unit.getSubUnitArr(), opponentArr);
@@ -124,6 +134,34 @@ public abstract class Stage extends JPanel {
         }
     }
 
+    /**
+     * 가장 가까운 적비행기를 찾는 알고리즘
+     * @param opponentArr 적비행기 배열
+     * @return 가장 가까운 적 비행기
+     */
+    private Unit getGuidedTarget(Unit unit, Unit[] opponentArr) {
+        Unit opponent = opponentArr[0];
+        int range = unit.getCenterPos().calRange(opponentArr[0].getCenterPos());
+        int len = opponentArr.length;
+        for (int i = 1; i < len; i++) {
+            if (opponentArr[i] == null) {
+                break;
+            }
+            if (opponentArr[i].isDead()) {
+                continue;
+            }
+            int temp = unit.getCenterPos().calRange(opponentArr[i].getCenterPos());
+            if (temp < range) {
+                range = temp;
+                opponent = opponentArr[i];
+            }
+        }
+        if (opponent.isDead()) {
+            return null;
+        }
+        return opponent;
+    }
+
     @Override
     public void paint(Graphics g) {
         tc.timeCheckerStart();
@@ -157,5 +195,9 @@ public abstract class Stage extends JPanel {
 
     public Friendly[] getFriendlyArr() {
         return friendlyArr;
+    }
+
+    public KeyAdapter getKeyAdapter() {
+        return friendlyArr[0].getKeyAdapter();
     }
 }

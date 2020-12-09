@@ -83,8 +83,8 @@ public abstract class Plane extends Unit {
     }
 
     @Override
-    public void move(Unit opponent) {
-        super.move(opponent);
+    public void directMove(double xsw, double ysw) {
+        super.directMove(xsw, ysw);
         shotBullet();
     }
 

@@ -47,4 +47,10 @@ public class Point {
     public Point getCenterPos(int width, int height) {
         return new Point(getX() + width / 2, getY() + height / 2);
     }
+
+    @Override
+    public String toString() {
+        return "Point [x=" + x + ", y=" + y + "]";
+    }
+    
 }

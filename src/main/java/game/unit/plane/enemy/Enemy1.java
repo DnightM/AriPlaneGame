@@ -2,14 +2,14 @@ package game.unit.plane.enemy;
 
 import java.awt.image.BufferedImage;
 
-import game.Point;
+import game.scenario.Scenario;
 import game.unit.Unit;
 
 public class Enemy1 extends Enemy {
     private static final BufferedImage IMG = getImg("img/enemy/enemy1.png");
 
-    public Enemy1(Point pos) {
-        super(pos, Unit.STAY);
+    public Enemy1(Scenario sc) {
+        super(sc, Unit.STAY);
     }
 
     @Override

@@ -23,7 +23,7 @@ public abstract class Unit {
     public static final int SOUTH_WEST = 9;
     public static final int SOUTH_EAST = 12;
 
-    private Point pos;
+    protected Point pos;
     private int direction; // 1:서, 2:북, 4:동, 8:남, 3:북서, 9:남서, 6:북동, 12:남동
 
     public Unit(Point pos, int direction) {
@@ -68,10 +68,6 @@ public abstract class Unit {
     }
 
     // Pos
-    public Point getPoint() {
-        return pos;
-    }
-
     public int getX() {
         return pos.getX();
     }
@@ -88,7 +84,7 @@ public abstract class Unit {
         pos.y = y;
     }
 
-    protected Point getCenterPos() {
+    public Point getCenterPos() {
         return pos.getCenterPos(getWidth(), getHeight());
     }
 
@@ -121,12 +117,16 @@ public abstract class Unit {
     }
 
     // Move
-    protected void move(double xsw, double ysw) {
+    protected void directMove(double xsw, double ysw) {
         setX(pos.x + xsw);
         setY(pos.y + ysw);
     }
 
     public void move() {
+        if (isGuided() && guidedTargetOpponent != null) {
+            guidedMove();
+            return;
+        }
         for (int i = 0; i < 4; i++) {
             int t = 1 << i;
             if ((direction & t) > 0) {
@@ -139,16 +139,16 @@ public abstract class Unit {
                 if (i < 2) {
                     // 짝수면 x
                     if ((i & 1) == 0) {
-                        move(-speed, 0);
+                        directMove(-speed, 0);
                     } else {
-                        move(0, -speed);
+                        directMove(0, -speed);
                     }
                 } else {
                     // 홀수면 y
                     if ((i & 1) == 0) {
-                        move(speed, 0);
+                        directMove(speed, 0);
                     } else {
-                        move(0, speed);
+                        directMove(0, speed);
                     }
                 }
             }
@@ -160,41 +160,18 @@ public abstract class Unit {
         return false;
     }
 
-    public void move(Unit opponent) {
-        double[] range = getGuidedPos(getCenterPos(), opponent.getCenterPos());
-        move(range[0], range[1]);
+    private Unit guidedTargetOpponent;
+
+    private void guidedMove() {
+        double[] move = getGuidedPos(getCenterPos(), guidedTargetOpponent.getCenterPos());
+        directMove(move[0], move[1]);
+    }
+
+    public void setGuidedTarget(Unit opponent) {
+        guidedTargetOpponent = opponent;
     }
 
     protected double[] getGuidedPos(Point pos1, Point pos2) {
         return null;
     }
-
-    /**
-     * 가장 가까운 적비행기를 찾는 알고리즘
-     * @param opponentArr 적비행기 배열
-     * @return 가장 가까운 적 비행기
-     */
-    public Unit getFollowTarget(Unit[] opponentArr) {
-        Unit unit = opponentArr[0];
-        int range = pos.calRange(opponentArr[0].getPoint());
-        int len = opponentArr.length;
-        for (int i = 1; i < len; i++) {
-            if (opponentArr[i] == null) {
-                break;
-            }
-            if (opponentArr[i].isDead()) {
-                continue;
-            }
-            int temp = pos.calRange(opponentArr[i].getPoint());
-            if (temp < range) {
-                range = temp;
-                unit = opponentArr[i];
-            }
-        }
-        if (unit.isDead()) {
-            return null;
-        }
-        return unit;
-    }
-
 }
