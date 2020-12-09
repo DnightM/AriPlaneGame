@@ -2,25 +2,28 @@ package game.scenario;
 
 import game.Point;
 
-public class Scenario {
+public abstract class Scenario {
     private static final double[] STAY = new double[] { 0d, 0d };
 
     private long delay;
     private int posIdx = 1;
+    private int posesLen;
+    private Point[] poses;
 
-    protected Point[] poses = new Point[] {
-            new Point(100, 100),
-            new Point(200, 200),
-            new Point(100, 100),
-            new Point(200, 200),
-            new Point(100, 100),
-    };
+    protected abstract Point[] getPoses();
 
     public Scenario(long delay) {
         this.delay = delay;
     }
 
     public Point getStartPos() {
+        if (poses == null) {
+            // 원래 생성자에 있었는데 여기로 옮김.
+            // 자식 클래스에서 파라미터로 전달 받은 생성자에 있는 변수들이 재대로 값을 받지 못하고
+            // poses가 세팅되어버려서 문제가 발생. 그래서 여기로 옮김
+            this.poses = getPoses();
+            this.posesLen = poses.length;
+        }
         return poses[0];
     }
 
@@ -42,7 +45,7 @@ public class Scenario {
             delay--;
             return STAY;
         }
-        if (posIdx == poses.length) {
+        if (posIdx == posesLen) {
             return STAY;
         }
         return getGuidedPos(pos, poses[posIdx]);

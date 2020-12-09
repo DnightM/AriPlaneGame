@@ -11,6 +11,9 @@ import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import game.unit.Unit;
 import game.unit.bullet.Bullet;
 import game.unit.plane.Plane;
@@ -20,6 +23,8 @@ import game.util.TimeChecker;
 
 @SuppressWarnings("serial")
 public abstract class Stage extends JPanel {
+    private static final Logger logger = LoggerFactory.getLogger(Stage.class);
+
     private static final int FRIENDLY_MAX_COUNT = 10;
     private static final int ENEMY_MAX_COUNT = 100;
 
@@ -129,7 +134,8 @@ public abstract class Stage extends JPanel {
                 } else if (unit instanceof Bullet) {
                     opponent.setLife(-1);
                 }
-                System.out.println("collection | " + opponent.getClass().getName() + " | " + opponent.getLife());
+                logger.info("collection | " + opponent.getClass().getName() + " | " + opponent.getLife());
+                break;
             }
         }
     }

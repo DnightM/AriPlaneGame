@@ -16,10 +16,10 @@ public abstract class Enemy extends Plane {
     public void move() {
         double[] sw = sc.move(pos);
         super.directMove(sw[0], sw[1]);
-        if (getX() > Stage.WIDTH) {
+        if (getX() > Stage.WIDTH || getX() < 0) {
             kill();
         }
-        if (getY() < 0 || getY() > Stage.HEIGHT) {
+        if (getY() > Stage.HEIGHT) {
             kill();
         }
     }
