@@ -73,14 +73,14 @@ public class Satellite extends Friendly {
 
     @Override
     protected double[] getGuidedPos(Point pos1, Point pos2) {
-        int y = pos2.getY() - pos1.getY();
         int x = pos2.getX() + satellitePosition() - pos1.getX();
+        int y = pos2.getY() - pos1.getY();
+        if (x == 0 && y == 0) {
+            return new double[] { 0d, 0d };
+        }
         double radian = Math.atan2(y, x);
         double xPos = Math.cos(radian);
         double yPos = Math.sin(radian);
-        if (xPos == 1 && yPos == 0) {
-            return new double[] { 0d, 0d };
-        }
         return new double[] { xPos, yPos };
     }
 
