@@ -1,9 +1,7 @@
 package game.stage;
 
 import game.Point;
-import game.scenario.Scenario;
-import game.unit.plane.enemy.*;
-import game.unit.plane.friendly.*;
+import game.unit.plane.friendly.Friendly1;
 import game.unit.plane.friendly.satellite.SatelliteLeft;
 import game.unit.plane.friendly.satellite.SatelliteRight;
 

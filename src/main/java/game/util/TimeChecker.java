@@ -7,7 +7,7 @@ public class TimeChecker {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private long time = 0, count = 0, calcuratorTime = 0, before;
-    private String name;
+    private final String name;
 
     public TimeChecker(String name) {
         this.name = name;

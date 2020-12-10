@@ -15,7 +15,7 @@ import game.unit.bullet.straight.StraightBullet;
 public class BulletFactory {
     private static final Logger logger = LoggerFactory.getLogger(BulletFactory.class);
 
-    public static Bullet getBullet(String bulletName, Point pos) throws Exception {
+    public static Bullet getBullet(String bulletName, Point pos) {
         if (bulletName == null)
             return null;
 
@@ -36,7 +36,7 @@ public class BulletFactory {
         return null;
     }
 
-    public static int getBulletRate(String bulletName) throws Exception {
+    public static int getBulletRate(String bulletName) {
         if (bulletName == null)
             return -1;
 

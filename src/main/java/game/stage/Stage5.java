@@ -1,7 +1,6 @@
 package game.stage;
 
 import game.Point;
-import game.scenario.Scenario;
 import game.scenario.ScenarioBreak;
 import game.scenario.ScenarioStraight;
 import game.unit.plane.enemy.*;

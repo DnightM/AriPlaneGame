@@ -5,7 +5,7 @@ import game.stage.Stage;
 import game.unit.plane.Plane;
 
 public abstract class Enemy extends Plane {
-    private Scenario sc;
+    private final Scenario sc;
 
     public Enemy(Scenario sc, double direction) {
         super(sc.getStartPos(), direction);
