@@ -36,6 +36,10 @@ public class BulletFactory {
         return null;
     }
 
+    public void run() {
+
+    }
+
     public static int getBulletRate(String bulletName) throws Exception {
         if (bulletName == null)
             return -1;
