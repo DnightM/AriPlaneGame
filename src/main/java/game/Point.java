@@ -17,14 +17,6 @@ public class Point {
         return toInt(y);
     }
 
-    public double getXd() {
-        return x;
-    }
-
-    public double getYd() {
-        return y;
-    }
-
     private int toInt(double pos) {
         return (int) Math.round(pos);
     }
@@ -32,10 +24,8 @@ public class Point {
     /**
      * 거리 계산 함수.
      * 단순 거리 비교를 할 것이기 때문에 루트는 씌우지 않음.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     *
+     * @param target 목표점
      * @return 거리^2
      */
     public int calRange(Point target) {
@@ -44,7 +34,7 @@ public class Point {
         return x * x + y * y;
     }
 
-    public Point getCenterPos(int width, int height) {
+    public Point getCenterPos(double width, double height) {
         return new Point(getX() + width / 2, getY() + height / 2);
     }
 
@@ -52,5 +42,4 @@ public class Point {
     public String toString() {
         return "Point [x=" + x + ", y=" + y + "]";
     }
-    
 }

@@ -11,3 +11,4 @@ build
 /gradlew.bat
 /gradle/
 /log/
+/.idea/

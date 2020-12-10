@@ -18,8 +18,8 @@ public class Stage4 extends Stage {
     @Override
     public void init() {
         friendlyArr[0] = new Friendly1(new Point(500, 900));
-        friendlyArr[1] = new SatelliteLeft(new Point(500, 900), friendlyArr[0]);
-        friendlyArr[2] = new SatelliteRight(new Point(500, 900), friendlyArr[0]);
+        friendlyArr[1] = new SatelliteLeft(friendlyArr[0]);
+        friendlyArr[2] = new SatelliteRight(friendlyArr[0]);
 
         for (int i = 0; i < 10; i++) {
             Enemy1 e = new Enemy1(new ScenarioStraight(0L, 100 * i));

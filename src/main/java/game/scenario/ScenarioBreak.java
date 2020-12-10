@@ -15,14 +15,14 @@ public class ScenarioBreak extends Scenario {
 	 * @param isLeft
 	 */
 	public ScenarioBreak(long delay, int startX, int endY, boolean isLeft) {
-		super(delay);
+		super(delay, true);
 		this.startX = startX;
 		this.endY = endY;
 		this.isLeft = isLeft;
 	}
 
 	@Override
-	protected Point[] getPoses() {
+	protected Point[] getPs() {
 		return new Point[]{
 				new Point(startX, -100),
 				new Point(startX, endY),

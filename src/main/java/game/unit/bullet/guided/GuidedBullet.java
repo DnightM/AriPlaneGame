@@ -17,11 +17,6 @@ public class GuidedBullet extends Bullet {
     }
 
     @Override
-    protected int rate() {
-        return RATE;
-    }
-
-    @Override
     protected double speed() {
         return 1.5d;
     }
@@ -41,6 +36,7 @@ public class GuidedBullet extends Bullet {
         return HEIGHT;
     }
 
+    @Override
     public boolean isGuided() {
         return true;
     }
@@ -49,33 +45,23 @@ public class GuidedBullet extends Bullet {
 
     /**
      * 가중치
-     * @param y
+     *
+     * @param y y좌표
      * @return 가중치
      */
     protected int getWeight(int y) {
         return 0;
     }
 
-    /**
-     * 적 비행기를 따라가는 루트를 계산하는 함수
-     * 좀더 멋진 포물선을 위해 acceleration 변수를 사용.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @return 
-     */
     @Override
-    protected double[] getGuidedPos(Point pos1, Point pos2) {
+    protected double getDirection() {
+        if (guidedTarget == null) {
+            return defalutDirection;
+        }
+        Point pos1 = getCenterPos();
+        Point pos2 = guidedTarget.getCenterPos();
         int y = pos2.getY() - pos1.getY();
         int x = pos2.getX() + getWeight(y) - pos1.getX();
-        double radian = Math.atan2(y, x);
-        double xPos = Math.cos(radian) * acceleration;
-        double yPos = Math.sin(radian) * acceleration;
-        acceleration *= 1.005;
-        //        System.out.println(String.format("좌표 : %d %d %d %d", x1, y1, x2, y2));
-        //        System.out.println("각도 : " + radian * 180 / Math.PI);
-        //        System.out.println("radian " + radian);
-        return new double[] { xPos, yPos };
+        return Math.atan2(y, x);
     }
 }

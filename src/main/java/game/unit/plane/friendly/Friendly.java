@@ -12,7 +12,7 @@ import game.unit.Unit;
 import game.unit.plane.Plane;
 
 public abstract class Friendly extends Plane {
-    private static double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
+    private static final double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
     private static final Logger logger = LoggerFactory.getLogger(Friendly.class);
 
     //    private static final int STAY = 0;
@@ -52,6 +52,7 @@ public abstract class Friendly extends Plane {
     @Override
     public void move() {
         super.move();
+        shotBullet();
 
         for (int i = 0; i < 4; i++) {
             int t = 1 << i;
@@ -65,41 +66,41 @@ public abstract class Friendly extends Plane {
                 if (i < 2) {
                     // 짝수면 x
                     if ((i & 1) == 0) {
-                        directMove(-speed, 0);
+                        directMove(getX() - speed, getY());
                     } else {
-                        directMove(0, -speed);
+                        directMove(getX(), getY() - speed);
                     }
                 } else {
                     // 홀수면 y
                     if ((i & 1) == 0) {
-                        directMove(speed, 0);
+                        directMove(getX() + speed, getY());
                     } else {
-                        directMove(0, speed);
+                        directMove(getX(), getY() + speed);
                     }
                 }
             }
         }
-        shotBullet();
         // 아래 if 4개는 stage에서 정의된 width height 범위를 비행기가 넘어가지 못하도록 제한하는 역할을 함.
         if (getX() < 0) {
-            setX(0);
+            directMove(0, getY());
         }
         int width = Stage.WIDTH - getWidth();
         if (getX() > width) {
-            setX(width);
+            directMove(width, getY());
         }
         if (getY() < 0) {
-            setY(0);
+            directMove(getX(), 0);
         }
         int height = Stage.HEIGHT - getHeight();
         if (getY() > height) {
-            setY(height);
+            directMove(getX(), height);
         }
     }
 
     /**
      * 키보드로 비행기를 조정할 수 있도록 하는 keyAdapter
-     * @return
+     *
+     * @return keyAdapter
      */
     public KeyAdapter getKeyAdapter() {
         return new KeyAdapter() {
@@ -107,11 +108,11 @@ public abstract class Friendly extends Plane {
              *  38=right
              *  39=up
              *  40=down
-             *  
+             *
              *  90=z
              *  88=x
              *  67=c
-             *  
+             *
              *  32 = space
              */
             @Override
@@ -119,26 +120,26 @@ public abstract class Friendly extends Plane {
                 int key = e.getKeyCode();
 
                 switch (key) {
-                case 37:
-                    if ((direction & WEST) == 0) {
-                        direction += WEST;
-                    }
-                    break;
-                case 38:
-                    if ((direction & NORTH) == 0) {
-                        direction += NORTH;
-                    }
-                    break;
-                case 39:
-                    if ((direction & EAST) == 0) {
-                        direction += EAST;
-                    }
-                    break;
-                case 40:
-                    if ((direction & SOUTH) == 0) {
-                        direction += SOUTH;
-                    }
-                    break;
+                    case 37:
+                        if ((direction & WEST) == 0) {
+                            direction += WEST;
+                        }
+                        break;
+                    case 38:
+                        if ((direction & NORTH) == 0) {
+                            direction += NORTH;
+                        }
+                        break;
+                    case 39:
+                        if ((direction & EAST) == 0) {
+                            direction += EAST;
+                        }
+                        break;
+                    case 40:
+                        if ((direction & SOUTH) == 0) {
+                            direction += SOUTH;
+                        }
+                        break;
                 }
             }
 
@@ -146,26 +147,26 @@ public abstract class Friendly extends Plane {
             public void keyReleased(KeyEvent e) {
                 int key = e.getKeyCode();
                 switch (key) {
-                case 37:
-                    if ((direction & WEST) > 0) {
-                        direction -= WEST;
-                    }
-                    break;
-                case 38:
-                    if ((direction & NORTH) > 0) {
-                        direction -= NORTH;
-                    }
-                    break;
-                case 39:
-                    if ((direction & EAST) > 0) {
-                        direction -= EAST;
-                    }
-                    break;
-                case 40:
-                    if ((direction & SOUTH) > 0) {
-                        direction -= SOUTH;
-                    }
-                    break;
+                    case 37:
+                        if ((direction & WEST) > 0) {
+                            direction -= WEST;
+                        }
+                        break;
+                    case 38:
+                        if ((direction & NORTH) > 0) {
+                            direction -= NORTH;
+                        }
+                        break;
+                    case 39:
+                        if ((direction & EAST) > 0) {
+                            direction -= EAST;
+                        }
+                        break;
+                    case 40:
+                        if ((direction & SOUTH) > 0) {
+                            direction -= SOUTH;
+                        }
+                        break;
                 }
             }
         };

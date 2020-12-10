@@ -2,7 +2,7 @@ package unit;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class UnitTest {
     public void moveTest1() {
         Unit u = new Unit(pos, Unit.WEST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -55,7 +55,7 @@ public class UnitTest {
     public void moveTest2() {
         Unit u = new Unit(pos, Unit.NORTH) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -93,7 +93,7 @@ public class UnitTest {
     public void moveTest3() {
         Unit u = new Unit(pos, Unit.EAST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -131,7 +131,7 @@ public class UnitTest {
     public void moveTest4() {
         Unit u = new Unit(pos, Unit.SOUTH) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -169,7 +169,7 @@ public class UnitTest {
     public void moveTest5() {
         Unit u = new Unit(pos, Unit.NORTH_WEST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -208,7 +208,7 @@ public class UnitTest {
     public void moveTest6() {
         Unit u = new Unit(pos, Unit.SOUTH_WEST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -247,7 +247,7 @@ public class UnitTest {
     public void moveTest7() {
         Unit u = new Unit(pos, Unit.NORTH_EAST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -286,7 +286,7 @@ public class UnitTest {
     public void moveTest8() {
         Unit u = new Unit(pos, Unit.SOUTH_EAST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -325,7 +325,7 @@ public class UnitTest {
     public void moveTest9() {
         Unit u = new Unit(pos, Unit.SOUTH_EAST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override
@@ -368,7 +368,7 @@ public class UnitTest {
     public void moveTest10() {
         Unit u = new Unit(pos, Unit.SOUTH_WEST) {
             @Override
-            public void draw(Graphics g) {
+            public void draw(Graphics2D g) {
             }
 
             @Override

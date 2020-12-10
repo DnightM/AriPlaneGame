@@ -7,16 +7,11 @@ import game.unit.bullet.Bullet;
 
 public class SpreadSubBullet extends Bullet {
     private static final int WIDTH = 3;
-    private static final int HEIGHT = 3;
+    private static final int HEIGHT = 6;
     private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
 
     public SpreadSubBullet(Point pos, double direction) {
         super(pos, WIDTH, HEIGHT, direction);
-    }
-
-    @Override
-    protected int rate() {
-        return 100;
     }
 
     @Override

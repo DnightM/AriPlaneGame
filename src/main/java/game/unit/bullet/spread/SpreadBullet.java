@@ -1,6 +1,6 @@
 package game.unit.bullet.spread;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import game.Point;
@@ -26,11 +26,6 @@ public class SpreadBullet extends Bullet {
 
 	public SpreadBullet(Point pos, double direction) {
 		super(pos, 0, 0, direction);
-	}
-
-	@Override
-	protected int rate() {
-		return RATE;
 	}
 
 	@Override
@@ -65,7 +60,7 @@ public class SpreadBullet extends Bullet {
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 
 	}
 

@@ -14,8 +14,8 @@ public class StageSingle extends Stage {
     @Override
     public void init() {
         friendlyArr[0] = new Friendly1(new Point(500, 900));
-        friendlyArr[1] = new SatelliteLeft(friendlyArr[0].getCenterPos(), friendlyArr[0]);
-        friendlyArr[2] = new SatelliteRight(friendlyArr[0].getCenterPos(), friendlyArr[0]);
+        friendlyArr[1] = new SatelliteLeft(friendlyArr[0]);
+        friendlyArr[2] = new SatelliteRight(friendlyArr[0]);
 
     }
 }

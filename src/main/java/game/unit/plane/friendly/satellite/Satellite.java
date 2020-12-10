@@ -7,12 +7,12 @@ import game.unit.Unit;
 import game.unit.plane.friendly.Friendly;
 
 public class Satellite extends Friendly {
-    private static final String[] BULLET_NAMES = new String[] { "StraightBullet" };
+    private static final String[] BULLET_NAMES = new String[]{"StraightBullet"};
     private static final BufferedImage IMG = getImg("img/satellite/satellite.png");
     private final Friendly friendly;
 
-    public Satellite(Point pos, Friendly friendly) {
-        super(pos);
+    public Satellite(Friendly friendly) {
+        super(friendly.getCenterPos());
         this.friendly = friendly;
 
         // 일정 시간 후에 죽게하는 함수
@@ -71,28 +71,26 @@ public class Satellite extends Friendly {
         return 0;
     }
 
+    /**
+     * 이걸 아군기로 return하면 항상 아군기만 쫓아다님
+     *
+     * @param opponentArr 안씀.
+     * @return 아군기
+     */
     @Override
     public Unit getGuidedTarget(Unit[] opponentArr) {
         return friendly;
     }
 
     @Override
-    public void move() {
-        double[] sw = getGuidedPos(getCenterPos(), friendly.getCenterPos());
-        super.directMove(sw[0], sw[1]);
-        shotBullet();
-    }
-
-    @Override
-    public double[] getGuidedPos(Point pos1, Point pos2) {
+    protected double getDirection() {
+        Point pos1 = getCenterPos();
+        Point pos2 = friendly.getCenterPos();
         int x = pos2.getX() + satellitePosition() - pos1.getX();
         int y = pos2.getY() - pos1.getY();
         if (x == 0 && y == 0) {
-            return new double[] { 0d, 0d };
+            return -1;
         }
-        double radian = Math.atan2(y, x);
-        double xPos = Math.cos(radian);
-        double yPos = Math.sin(radian);
-        return new double[] { xPos, yPos };
+        return Math.atan2(y, x);
     }
 }

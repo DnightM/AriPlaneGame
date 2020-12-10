@@ -40,8 +40,4 @@ public class StraightBullet extends Bullet {
         return 4d;
     }
 
-    @Override
-    protected int rate() {
-        return 40;
-    }
 }
