@@ -15,7 +15,7 @@ import game.unit.bullet.straight.StraightBullet;
 public class BulletFactory {
     private static final Logger logger = LoggerFactory.getLogger(BulletFactory.class);
 
-    public static Bullet getBullet(String bulletName, Point pos) {
+    public static Bullet getBullet(String bulletName, Point pos) throws Exception {
         if (bulletName == null)
             return null;
 
