@@ -14,6 +14,7 @@ public class ScenarioStraight extends Scenario {
     protected Point[] getPs() {
         return new Point[]{
                 new Point(startX, -100),
+                new Point(startX, 500),
                 new Point(startX, 1100),
         };
     }

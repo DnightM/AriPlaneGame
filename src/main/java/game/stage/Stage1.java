@@ -13,10 +13,9 @@ public class Stage1 extends Stage {
 
     @Override
     public void init() {
-        // 10개가 직선으로 다가오면서 총알 쏘면 됨
         friendlyArr[0] = new Friendly1(new Point(500, 900));
-        for (int i = 0; i < 10; i++) {
-            Enemy1 e = new Enemy1(new ScenarioStraight(0L, 100 * i));
+        for (int i = 0; i < 100; i++) {
+            Enemy1 e = new Enemy1(new ScenarioStraight(i * 10, 100 * (i % 10)));
             enemyArr[i] = e;
         }
     }

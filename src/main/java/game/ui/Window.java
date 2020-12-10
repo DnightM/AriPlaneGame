@@ -23,7 +23,6 @@ public class Window extends JFrame {
         int height = 1000;
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
-        this.setTitle("뷍");
 
         this.setVisible(true);
         Insets i = this.getInsets();

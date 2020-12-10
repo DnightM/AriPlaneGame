@@ -21,6 +21,10 @@ public class Point {
         return (int) Math.round(pos);
     }
 
+    public double[] toDoubleArr() {
+        return new double[]{x, y};
+    }
+
     /**
      * 거리 계산 함수.
      * 단순 거리 비교를 할 것이기 때문에 루트는 씌우지 않음.
@@ -42,4 +46,6 @@ public class Point {
     public String toString() {
         return "Point [x=" + x + ", y=" + y + "]";
     }
+
+
 }

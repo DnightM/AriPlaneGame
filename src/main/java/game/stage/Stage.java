@@ -1,7 +1,17 @@
 package game.stage;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import game.unit.Unit;
+import game.unit.bullet.Bullet;
+import game.unit.plane.Plane;
+import game.unit.plane.enemy.Enemy;
+import game.unit.plane.friendly.Friendly;
+import game.util.TimeChecker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -9,20 +19,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import game.unit.Unit;
-import game.unit.bullet.Bullet;
-import game.unit.plane.Plane;
-import game.unit.plane.enemy.Enemy;
-import game.unit.plane.friendly.Friendly;
-import game.util.TimeChecker;
 
 @SuppressWarnings("serial")
 public abstract class Stage extends JPanel {

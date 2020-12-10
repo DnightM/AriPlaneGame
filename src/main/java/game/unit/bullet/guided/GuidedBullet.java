@@ -8,7 +8,7 @@ import game.unit.bullet.Bullet;
 
 public class GuidedBullet extends Bullet {
     public static final int RATE = 50;
-    private static final int WIDTH = 5;
+    private static final int WIDTH = 10;
     private static final int HEIGHT = 5;
     private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
 

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public abstract class Bullet extends Unit {
-    public Bullet(Point pos, int width, int height, double direction) {
+    public Bullet(Point pos, double width, double height, double direction) {
         super(new Point(pos.x - width / 2, pos.y), direction);
     }
 
@@ -25,7 +25,7 @@ public abstract class Bullet extends Unit {
     @Override
     public void draw(Graphics2D g) {
         AffineTransform old = g.getTransform();
-        g.rotate(getDirection());
+        g.rotate(getDirection(), getX() + getWidth() / 2, getY() + getHeight() / 2);
         super.draw(g);
         g.setTransform(old);
     }

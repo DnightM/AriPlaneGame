@@ -11,7 +11,6 @@ import java.util.Objects;
 public abstract class Unit {
     public static final int UNIT_ARR_LENGTH = 300; // 적군 개수 limit, 기체당 총알 개수 limit. 공용으로 씀
 
-    // TODO 언젠가 360도로 변경할 예정 근데 그럼 많이 느릴까?
     public static final double STAY = -1;
     public static final double EAST = Math.toRadians(0);
     public static final double SOUTH = Math.toRadians(90);
