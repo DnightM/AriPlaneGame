@@ -16,43 +16,42 @@ public class BulletFactory {
     private static final Logger logger = LoggerFactory.getLogger(BulletFactory.class);
 
     public static Bullet getBullet(String bulletName, Point pos) throws Exception {
-        switch (bulletName) {
-        case "StraightBullet":
-            return new StraightBullet(pos);
-        case "EnemyStraightBullet":
-            return new EnemyStraightBullet(pos);
-        case "SpreadBullet":
-            return new SpreadBullet(pos);
-        case "GuidedLeftBullet":
-            return new GuidedLeftBullet(pos);
-        case "GuidedRightBullet":
-            return new GuidedRightBullet(pos);
-        case "EnemySpreadBullet":
-            return new EnemySpreadBullet(pos);
-        default:
-            logger.error("Can't find [" + bulletName + "] Bullet | EXIT Programe");
-            System.exit(0);
+        if (bulletName == null)
             return null;
-        }
+
+        if (bulletName.equalsIgnoreCase("StraightBullet"))
+            return new StraightBullet(pos);
+        if (bulletName.equalsIgnoreCase("EnemyStraightBullet"))
+            return new EnemyStraightBullet(pos);
+        if (bulletName.equalsIgnoreCase("SpreadBullet"))
+            return new SpreadBullet(pos);
+        if (bulletName.equalsIgnoreCase("GuidedLeftBullet"))
+            return new GuidedLeftBullet(pos);
+        if (bulletName.equalsIgnoreCase("GuidedRightBullet"))
+            return new GuidedRightBullet(pos);
+        if (bulletName.equalsIgnoreCase("EnemySpreadBullet"))
+            return new EnemySpreadBullet(pos);
+
+        logger.error("Can't find [" + bulletName + "] Bullet");
+        return null;
     }
 
     public static int getBulletRate(String bulletName) throws Exception {
-        switch (bulletName) {
-        case "StraightBullet":
-            return StraightBullet.RATE;
-        case "EnemyStraightBullet":
-            return EnemyStraightBullet.RATE;
-        case "SpreadBullet":
-            return SpreadBullet.RATE;
-        case "GuidedLeftBullet":
-        case "GuidedRightBullet":
-            return GuidedBullet.RATE;
-        case "EnemySpreadBullet":
-            return EnemySpreadBullet.RATE;
-        default:
-            logger.error("Can't find [" + bulletName + "] Bullet | EXIT Programe");
-            System.exit(0);
+        if (bulletName == null)
             return -1;
-        }
+
+        if (bulletName.equalsIgnoreCase("StraightBullet"))
+            return StraightBullet.RATE;
+        if (bulletName.equalsIgnoreCase("EnemyStraightBullet"))
+            return EnemyStraightBullet.RATE;
+        if (bulletName.equalsIgnoreCase("SpreadBullet"))
+            return SpreadBullet.RATE;
+        if (bulletName.equalsIgnoreCase("GuidedLeftBullet") || bulletName.equalsIgnoreCase("GuidedRightBullet"))
+            return GuidedBullet.RATE;
+        if (bulletName.equalsIgnoreCase("EnemySpreadBullet"))
+            return EnemySpreadBullet.RATE;
+
+        logger.error("Can't find [" + bulletName + "] Bullet");
+        return -1;
     }
 }
