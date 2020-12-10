@@ -1,11 +1,10 @@
 package game.unit.plane.friendly.satellite;
 
-import game.Point;
 import game.unit.plane.friendly.Friendly;
 
 public class SatelliteLeft extends Satellite {
-    public SatelliteLeft(Point pos, Friendly friendly) {
-        super(pos, friendly);
+    public SatelliteLeft(Friendly friendly) {
+        super(friendly);
     }
 
     @Override
