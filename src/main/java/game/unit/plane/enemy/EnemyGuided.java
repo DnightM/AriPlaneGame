@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import game.scenario.Scenario;
 import game.unit.Unit;
 
-public class Enemy2 extends Enemy {
+public class EnemyGuided extends Enemy {
     private static final BufferedImage IMG = getImg("img/enemy/enemy1.png");
 
-    public Enemy2(Scenario sc) {
-        super(sc, Unit.SOUTH);
+    public EnemyGuided(Scenario sc) {
+        super(sc, Unit.STAY);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Enemy2 extends Enemy {
 
     @Override
     public String[] getBulletNames() {
-        return new String[] { "EnemySpreadBullet" };
+        return new String[] { "EnemyGuidedBullet" };
     }
 
     @Override

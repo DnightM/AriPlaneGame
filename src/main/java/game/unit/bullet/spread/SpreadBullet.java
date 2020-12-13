@@ -8,69 +8,50 @@ import game.unit.Unit;
 import game.unit.bullet.Bullet;
 
 public class SpreadBullet extends Bullet {
-	public static final int RATE = 100;
-	protected Bullet[] bulletArr;
+    public static final int RATE = 100;
+    protected Bullet[] bulletArr;
 
-	public SpreadBullet(Point pos) {
-		this(pos, 0);
-		bulletArr = new Bullet[8];
-		bulletArr[0] = new SpreadSubBullet(pos, Unit.NORTH);
-		bulletArr[1] = new SpreadSubBullet(pos, Unit.NORTH_EAST);
-		bulletArr[2] = new SpreadSubBullet(pos, Unit.EAST);
-		bulletArr[3] = new SpreadSubBullet(pos, Unit.SOUTH_EAST);
-		bulletArr[4] = new SpreadSubBullet(pos, Unit.SOUTH);
-		bulletArr[5] = new SpreadSubBullet(pos, Unit.SOUTH_WEST);
-		bulletArr[6] = new SpreadSubBullet(pos, Unit.WEST);
-		bulletArr[7] = new SpreadSubBullet(pos, Unit.NORTH_WEST);
-	}
+    public SpreadBullet(Point pos, int bulletLevel) {
+        super(pos);
+        int benchmark = getBenchMark();
 
-	public SpreadBullet(Point pos, double direction) {
-		super(pos, 0, 0, direction);
-	}
+        bulletArr = new Bullet[bulletLevel * 2 + 1];
+        double interval = (double) 30 / bulletLevel;
+        bulletArr[0] = new SpreadSubBullet(pos, toDirection(benchmark));
+        for (int i = 1; i < bulletLevel; i++) {
+            double d1 = 360 - interval * i;
+            double d2 = (360 + interval * i) % 360;
+            bulletArr[i * 2 - 1] = new SpreadSubBullet(pos, toDirection(d1 + benchmark));
+            bulletArr[i * 2] = new SpreadSubBullet(pos, toDirection(d2 + benchmark));
+        }
+    }
 
-	@Override
-	protected double speed() {
-		return 0;
-	}
+    protected int getBenchMark() {
+        return 0;
+    }
 
-	@Override
-	protected BufferedImage img() {
-		return null;
-	}
+    @Override
+    protected double speed() {
+        return -1;
+    }
 
-	@Override
-	public int getWidth() {
-		return 0;
-	}
+    @Override
+    protected BufferedImage img() {
+        return null;
+    }
 
-	@Override
-	public int getHeight() {
-		return 0;
-	}
+    @Override
+    public int getWidth() {
+        return -1;
+    }
 
-	// 아래 5개를 이렇게 정의해야 다중 총알 구현 가능
-	@Override
-	public boolean hasSubUnit() {
-		return true;
-	}
+    @Override
+    public int getHeight() {
+        return -1;
+    }
 
-	@Override
-	public Unit[] getSubUnitArr() {
-		return bulletArr;
-	}
-
-	@Override
-	public void draw(Graphics2D g) {
-
-	}
-
-	@Override
-	public void move() {
-
-	}
-
-	@Override
-	public boolean isCheckCollision() {
-		return false;
-	}
+    @Override
+    public Unit[] getSubUnitArr() {
+        return bulletArr;
+    }
 }

@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import game.scenario.Scenario;
 import game.unit.Unit;
 
-public class Enemy3 extends Enemy {
+public class EnemySpread extends Enemy {
     private static final BufferedImage IMG = getImg("img/enemy/enemy1.png");
 
-    public Enemy3(Scenario sc) {
-        super(sc, Unit.STAY);
+    public EnemySpread(Scenario sc) {
+        super(sc, Unit.SOUTH);
     }
 
     @Override
@@ -19,12 +19,12 @@ public class Enemy3 extends Enemy {
 
     @Override
     public int getWidth() {
-        return 100;
+        return 20;
     }
 
     @Override
     public int getHeight() {
-        return 100;
+        return 20;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class Enemy3 extends Enemy {
 
     @Override
     public String[] getBulletNames() {
-        return new String[] { "EnemyStraightBullet" };
+        return new String[] { "EnemySpreadBullet" };
     }
 
     @Override
     protected int maxLife() {
-        return 1000;
+        return 10;
     }
 }

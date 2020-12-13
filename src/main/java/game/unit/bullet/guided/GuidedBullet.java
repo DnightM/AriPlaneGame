@@ -1,67 +1,58 @@
 package game.unit.bullet.guided;
 
-import java.awt.image.BufferedImage;
-
 import game.Point;
 import game.unit.Unit;
 import game.unit.bullet.Bullet;
 
+import java.awt.image.BufferedImage;
+
 public class GuidedBullet extends Bullet {
     public static final int RATE = 50;
-    private static final int WIDTH = 10;
-    private static final int HEIGHT = 5;
-    private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
+    protected Bullet[] bulletArr;
 
-    public GuidedBullet(Point pos) {
-        super(pos, WIDTH, HEIGHT, Unit.NORTH);
+    public GuidedBullet(Point pos, int bulletLevel) {
+        super(pos);
+        bulletArr = new Bullet[bulletLevel];
+
+        int b = bulletLevel & 1;
+        int t;
+        if (b == 1) {
+            bulletArr[0] = new GuidedSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
+            t = 10;
+        } else {
+            t = 5;
+        }
+        for (int i = b; i < (bulletLevel + b) / 2; i++) {
+            int idx = i * 2 - b;
+            bulletArr[idx] = new GuidedSubBullet(new Point(pos.x + t, pos.y), Unit.NORTH);
+            bulletArr[idx + 1] = new GuidedSubBullet(new Point(pos.x + -t, pos.y), Unit.NORTH);
+            t += 10;
+        }
+
     }
 
     @Override
     protected double speed() {
-        return 1.5d;
+        return -1;
     }
 
     @Override
     protected BufferedImage img() {
-        return IMG;
+        return null;
     }
 
     @Override
     public int getWidth() {
-        return WIDTH;
+        return -1;
     }
 
     @Override
     public int getHeight() {
-        return HEIGHT;
+        return -1;
     }
 
     @Override
-    public boolean isGuided() {
-        return true;
-    }
-
-    protected double acceleration = 1;
-
-    /**
-     * 가중치
-     *
-     * @param y y좌표
-     * @return 가중치
-     */
-    protected int getWeight(int y) {
-        return 0;
-    }
-
-    @Override
-    protected double getDirection() {
-        if (guidedTarget == null) {
-            return defalutDirection;
-        }
-        Point pos1 = getCenterPos();
-        Point pos2 = guidedTarget.getCenterPos();
-        int y = pos2.getY() - pos1.getY();
-        int x = pos2.getX() + getWeight(y) - pos1.getX();
-        return Math.atan2(y, x);
+    public Unit[] getSubUnitArr() {
+        return bulletArr;
     }
 }

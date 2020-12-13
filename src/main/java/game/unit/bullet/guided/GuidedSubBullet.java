@@ -1,22 +1,23 @@
-package game.unit.bullet.spread;
+package game.unit.bullet.guided;
 
 import java.awt.image.BufferedImage;
 
 import game.Point;
+import game.unit.Unit;
 import game.unit.bullet.Bullet;
 
-public class SpreadSubBullet extends Bullet {
-    private static final int WIDTH = 6;
-    private static final int HEIGHT = 3;
+public class GuidedSubBullet extends Bullet {
     private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
+    private static final int WIDTH = 10;
+    private static final int HEIGHT = 5;
 
-    public SpreadSubBullet(Point pos, double direction) {
+    public GuidedSubBullet(Point pos, double direction) {
         super(pos, WIDTH, HEIGHT, direction);
     }
 
     @Override
     protected double speed() {
-        return 3d;
+        return 1.5d;
     }
 
     @Override
@@ -32,5 +33,10 @@ public class SpreadSubBullet extends Bullet {
     @Override
     public int getHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    public boolean isGuided() {
+        return true;
     }
 }
