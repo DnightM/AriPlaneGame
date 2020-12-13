@@ -15,9 +15,9 @@ public class StageStraight extends Stage {
 
     @Override
     public void init() {
-        friendlyArr[0] = new FriendlyStraight(new Point(WIDTH / 2 + Friendly.WIDTH / 2, HEIGHT - 100));
+        friendlyArr[0] = new FriendlyStraight(new Point((double) WIDTH / 2 + (double) Friendly.WIDTH / 2, HEIGHT - 100));
         for (int i = 0; i < 10; i++) {
-            EnemyStraight e = new EnemyStraight(new ScenarioStraight(i  *10, WIDTH / 10 * (i % 10)));
+            EnemyStraight e = new EnemyStraight(new ScenarioStraight(i * 10, WIDTH / 10 * (i % 10)));
             enemyArr[i] = e;
         }
     }

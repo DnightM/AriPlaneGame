@@ -19,7 +19,7 @@ public class StageSatellite extends Stage {
 
     @Override
     public void init() {
-        friendlyArr[0] = new FriendlyGuided(new Point(WIDTH / 2 + Friendly.WIDTH / 2, HEIGHT -100));
+        friendlyArr[0] = new FriendlyGuided(new Point((double)WIDTH / 2 + (double)Friendly.WIDTH / 2, HEIGHT -100));
         friendlyArr[1] = new SatelliteLeft(friendlyArr[0]);
         friendlyArr[2] = new SatelliteRight(friendlyArr[0]);
 

@@ -13,7 +13,7 @@ public class StageSpread extends Stage {
 
     @Override
     public void init() {
-        friendlyArr[0] = new FriendlySpread(new Point(WIDTH / 2 + Friendly.WIDTH / 2, HEIGHT -100));
+        friendlyArr[0] = new FriendlySpread(new Point((double)WIDTH / 2 + (double)Friendly.WIDTH / 2, HEIGHT -100));
         for (int i = 0; i < 10; i++) {
             Enemy e = new EnemySpread(new ScenarioBreak(0L, 100 * i, 500, (i & 1) > 0));
             enemyArr[i] = e;
