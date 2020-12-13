@@ -35,7 +35,7 @@ public abstract class Scenario {
             this.psLen = ps.length;
             this.nowPos = new double[]{ps[0].x, ps[0].y};
         }
-        return ps[0];
+        return new Point(ps[0].x, ps[0].y);
     }
 
     public double[] next() {

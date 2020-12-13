@@ -18,15 +18,15 @@ public class StraightBullet extends Bullet {
         int b = bulletLevel & 1;
         int t;
         if (b == 1) {
-            bulletArr[0] = new StraightSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
+            bulletArr[0] = new StraightSubBullet(new Point(pos.x, pos.y));
             t = 10;
         } else {
             t = 5;
         }
         for (int i = b; i < (bulletLevel + b) / 2; i++) {
             int idx = i * 2 - b;
-            bulletArr[idx] = new StraightSubBullet(new Point(pos.x + t, pos.y), Unit.NORTH);
-            bulletArr[idx + 1] = new StraightSubBullet(new Point(pos.x + -t, pos.y), Unit.NORTH);
+            bulletArr[idx] = new StraightSubBullet(new Point(pos.x + t, pos.y));
+            bulletArr[idx + 1] = new StraightSubBullet(new Point(pos.x + -t, pos.y));
             t += 10;
         }
     }

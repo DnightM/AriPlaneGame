@@ -12,36 +12,20 @@ public class EnemyGuidedBullet extends GuidedBullet {
     public EnemyGuidedBullet(Point pos, int bulletLevel) {
         super(pos, bulletLevel);
         bulletArr = new Bullet[bulletLevel];
-        // 총알과 총알 간격은 10
-        switch (bulletLevel) {
-            case 1:
-                bulletArr[0] = new GuidedSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
-                break;
-            case 2:
-                bulletArr[0] = new GuidedSubBullet(new Point(pos.x - 5, pos.y), Unit.NORTH);
-                bulletArr[1] = new GuidedSubBullet(new Point(pos.x + 5, pos.y), Unit.NORTH);
-                break;
-            case 3:
-                bulletArr[0] = new GuidedSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
-                bulletArr[1] = new GuidedSubBullet(new Point(pos.x + 10, pos.y), Unit.NORTH);
-                bulletArr[2] = new GuidedSubBullet(new Point(pos.x - 10, pos.y), Unit.NORTH);
-                break;
-            case 4:
-                bulletArr[0] = new GuidedSubBullet(new Point(pos.x - 5, pos.y), Unit.NORTH);
-                bulletArr[1] = new GuidedSubBullet(new Point(pos.x + 5, pos.y), Unit.NORTH);
-                bulletArr[2] = new GuidedSubBullet(new Point(pos.x - 15, pos.y), Unit.NORTH);
-                bulletArr[3] = new GuidedSubBullet(new Point(pos.x + 15, pos.y), Unit.NORTH);
-                break;
-            case 5:
-            default:
-                bulletArr[0] = new GuidedSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
 
-                bulletArr[1] = new GuidedSubBullet(new Point(pos.x + 10, pos.y), Unit.NORTH);
-                bulletArr[2] = new GuidedSubBullet(new Point(pos.x - 10, pos.y), Unit.NORTH);
-
-                bulletArr[3] = new GuidedSubBullet(new Point(pos.x + 20, pos.y), Unit.NORTH);
-                bulletArr[4] = new GuidedSubBullet(new Point(pos.x - 20, pos.y), Unit.NORTH);
-                break;
+        int b = bulletLevel & 1;
+        int t;
+        if (b == 1) {
+            bulletArr[0] = new EnemyGuidedSubBullet(new Point(pos.x, pos.y));
+            t = 10;
+        } else {
+            t = 5;
+        }
+        for (int i = b; i < (bulletLevel + b) / 2; i++) {
+            int idx = i * 2 - b;
+            bulletArr[idx] = new EnemyGuidedSubBullet(new Point(pos.x + t, pos.y));
+            bulletArr[idx + 1] = new EnemyGuidedSubBullet(new Point(pos.x + -t, pos.y));
+            t += 10;
         }
     }
 

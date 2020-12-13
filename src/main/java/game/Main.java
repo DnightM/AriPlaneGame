@@ -11,11 +11,12 @@ public class Main {
         try {
             Window win = new Window();
 
-//            Stage stage = new StageGuided(win.panelWidth, win.panelHeight);
+            Stage stage = new StageGuided(win.panelWidth, win.panelHeight);
 //            Stage stage = new StageSatellite(win.panelWidth, win.panelHeight);
 //            Stage stage = new StageSpread(win.panelWidth, win.panelHeight);
-            Stage stage = new StageStraight(win.panelWidth, win.panelHeight);
+//            Stage stage = new StageStraight(win.panelWidth, win.panelHeight);
 //            Stage stage = new StageSingle(win.panelWidth, win.panelHeight);
+//            Stage stage = new StageTest(win.panelWidth, win.panelHeight);
             stage.init();
 
             win.setTitle("비행기 게임 " + stage.getClass().getSimpleName());

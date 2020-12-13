@@ -23,10 +23,12 @@ public abstract class Unit {
 
     protected Point pos;
     private double direction;
+    private double beforeRadian;
 
     public Unit(Point pos, double direction) {
         this.pos = pos;
         this.direction = direction;
+        this.beforeRadian = direction;
     }
 
     private boolean dead = false;
@@ -49,7 +51,7 @@ public abstract class Unit {
 
     /**
      * 충돌 검사를 할건지 말건지 결정하는 함수
-     * true면 검사하고 false면 검사하지 않음.
+     * 참이면 검사하고 거짓이면 검사하지 않음.
      *
      * @return 충돌 체크를 할지 여부
      */
@@ -94,6 +96,8 @@ public abstract class Unit {
         this.direction = direction;
     }
 
+    private static final double guidedDgreeRage = Math.toRadians(0.8);
+
     /**
      * 가야할 방향을 리턴함.
      *
@@ -107,7 +111,21 @@ public abstract class Unit {
         Point pos2 = guidedTarget.getCenterPos();
         int y = pos2.getY() - pos1.getY();
         int x = pos2.getX() - pos1.getX();
-        return Math.atan2(y, x);
+        double radian = Math.atan2(y, x);
+        double result = radian;
+        if (radian > beforeRadian) {
+            double t = radian - beforeRadian;
+            if (t > guidedDgreeRage) {
+                result = beforeRadian + guidedDgreeRage;
+            }
+        } else {
+            double t = beforeRadian - radian;
+            if (t > guidedDgreeRage) {
+                result = beforeRadian - guidedDgreeRage;
+            }
+        }
+        beforeRadian = result;
+        return result;
     }
 
     // Sub Unit
@@ -136,11 +154,12 @@ public abstract class Unit {
     }
 
     public void move() {
-        if (getDirection() == Unit.STAY) {
+        double radian = getDirection();
+        if (radian == Unit.STAY) {
             return;
         }
-        double xPos = Math.cos(getDirection()) * speed();
-        double yPos = Math.sin(getDirection()) * speed();
+        double xPos = Math.cos(radian) * speed();
+        double yPos = Math.sin(radian) * speed();
         directMove(pos.x + xPos, pos.y + yPos);
     }
 

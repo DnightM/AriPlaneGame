@@ -1,11 +1,10 @@
 package game.unit.bullet.spread;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import game.Point;
 import game.unit.Unit;
 import game.unit.bullet.Bullet;
+
+import java.awt.image.BufferedImage;
 
 public class SpreadBullet extends Bullet {
     public static final int RATE = 100;

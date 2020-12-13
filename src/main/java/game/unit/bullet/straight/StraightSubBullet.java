@@ -11,6 +11,10 @@ public class StraightSubBullet extends Bullet {
     private static final int WIDTH = 10;
     private static final int HEIGHT = 5;
 
+    public StraightSubBullet(Point pos) {
+        super(pos, WIDTH, HEIGHT, Unit.NORTH);
+    }
+
     public StraightSubBullet(Point pos, double direction) {
         super(pos, WIDTH, HEIGHT, direction);
     }
