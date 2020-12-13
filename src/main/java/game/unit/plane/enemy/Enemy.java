@@ -15,7 +15,10 @@ public abstract class Enemy extends Plane {
     @Override
     public void move() {
         double[] sw = sc.next();
-//        super.directMove(sw[0] * speed(), sw[1] * speed());
+/*
+       TODO 속도 적용할건지?
+       super.directMove(sw[0] * speed(), sw[1] * speed());
+*/
         super.directMove(sw[0], sw[1]);
 
         if (getX() > Stage.WIDTH || getX() < 0) {
