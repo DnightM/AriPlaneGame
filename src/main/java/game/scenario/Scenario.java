@@ -1,6 +1,7 @@
 package game.scenario;
 
 import game.Point;
+import game.stage.Stage;
 
 import java.util.Random;
 
@@ -81,7 +82,7 @@ public abstract class Scenario {
             return p1.toDoubleArr();
         }
         if (cp == null) {
-            cp = new Point(r.nextInt(1000), getRandomVal(p1.y, p2.y));
+            cp = new Point(r.nextInt(Stage.WIDTH), getRandomVal(p1.y, p2.y));
         }
         double uSqrt = u * u;
         double u2 = 1 - u;

@@ -22,12 +22,10 @@ public abstract class Unit {
     public static final double NORTH_EAST = Math.toRadians(315);
 
     protected Point pos;
-    protected final double defalutDirection;
     private double direction;
 
     public Unit(Point pos, double direction) {
         this.pos = pos;
-        this.defalutDirection = direction;
         this.direction = direction;
     }
 
@@ -102,16 +100,19 @@ public abstract class Unit {
      * @return direction(radian)
      */
     protected double getDirection() {
-        return direction;
+        if (guidedTarget == null) {
+            return direction;
+        }
+        Point pos1 = getCenterPos();
+        Point pos2 = guidedTarget.getCenterPos();
+        int y = pos2.getY() - pos1.getY();
+        int x = pos2.getX() - pos1.getX();
+        return Math.atan2(y, x);
     }
 
     // Sub Unit
-    public boolean hasSubUnit() {
-        return false;
-    }
-
     public Unit[] getSubUnitArr() {
-        return null;
+        return new Unit[]{};
     }
 
     public boolean isDead() {
@@ -123,7 +124,7 @@ public abstract class Unit {
         dead = true;
     }
 
-    public void alive(Point pos) {
+    protected void alive(Point pos) {
         dead = false;
         this.pos = pos;
     }
@@ -162,25 +163,24 @@ public abstract class Unit {
      */
     public Unit getGuidedTarget(Unit[] opponentArr) {
         // Unit 클래스에 있어야만 위성 유닛이 아군기를 타켓으로 지정할 수 있음.
-        Unit opponent = opponentArr[0];
-        int range = getCenterPos().calRange(opponentArr[0].getCenterPos());
-        int len = opponentArr.length;
-        for (int i = 1; i < len; i++) {
-            if (opponentArr[i] == null) {
+        Unit target = null;
+        int range = 1000000;
+        for (Unit opponent : opponentArr) {
+            if (opponent == null) {
                 break;
             }
-            if (opponentArr[i].isDead()) {
+            if (opponent.isDead()) {
                 continue;
             }
-            int temp = getCenterPos().calRange(opponentArr[i].getCenterPos());
+            int temp = getCenterPos().calRange(opponent.getCenterPos());
             if (temp < range) {
                 range = temp;
-                opponent = opponentArr[i];
+                target = opponent;
             }
         }
-        if (opponent.isDead()) {
+        if (target == null || target.isDead()) {
             return null;
         }
-        return opponent;
+        return target;
     }
 }

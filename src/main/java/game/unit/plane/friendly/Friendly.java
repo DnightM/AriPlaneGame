@@ -12,8 +12,11 @@ import game.unit.Unit;
 import game.unit.plane.Plane;
 
 public abstract class Friendly extends Plane {
-    private static final double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
     private static final Logger logger = LoggerFactory.getLogger(Friendly.class);
+    private static final double DIAGONAL_WIGHT = 1 / Math.sqrt(2);
+
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
     //    private static final int STAY = 0;
     private static final int WEST = 1;
@@ -35,12 +38,12 @@ public abstract class Friendly extends Plane {
 
     @Override
     public int getWidth() {
-        return 50;
+        return WIDTH;
     }
 
     @Override
     public int getHeight() {
-        return 50;
+        return HEIGHT;
     }
 
     @Override

@@ -5,39 +5,56 @@ import java.awt.image.BufferedImage;
 import game.Point;
 import game.unit.Unit;
 import game.unit.bullet.Bullet;
+import game.unit.bullet.guided.GuidedSubBullet;
 
 public class StraightBullet extends Bullet {
     public static final int RATE = 10;
-    private static final BufferedImage IMG = getImg("img/bullet/FriendlyBullet.png");
-    private static final int WIDTH = 10;
-    private static final int HEIGHT = 5;
+    protected Bullet[] bulletArr;
 
-    public StraightBullet(Point pos) {
-        this(pos, Unit.NORTH);
+    public StraightBullet(Point pos, int bulletLevel) {
+        super(pos);
+        bulletArr = new Bullet[bulletLevel];
+
+        int b = bulletLevel & 1;
+        int t;
+        if (b == 1) {
+            bulletArr[0] = new StraightSubBullet(new Point(pos.x, pos.y), Unit.NORTH);
+            t = 10;
+        } else {
+            t = 5;
+        }
+        for (int i = b; i < (bulletLevel + b) / 2; i++) {
+            int idx = i * 2 - b;
+            bulletArr[idx] = new StraightSubBullet(new Point(pos.x + t, pos.y), Unit.NORTH);
+            bulletArr[idx + 1] = new StraightSubBullet(new Point(pos.x + -t, pos.y), Unit.NORTH);
+            t += 10;
+        }
     }
 
-    protected StraightBullet(Point pos, double direction) {
-        super(pos, WIDTH, HEIGHT, direction);
-    }
 
     @Override
-    public int getWidth() {
-        return WIDTH;
-    }
-
-    @Override
-    public int getHeight() {
-        return HEIGHT;
+    protected double speed() {
+        return -1;
     }
 
     @Override
     protected BufferedImage img() {
-        return IMG;
+        return null;
     }
 
     @Override
-    protected double speed() {
-        return 4d;
+    public int getWidth() {
+        return -1;
+    }
+
+    @Override
+    public int getHeight() {
+        return -1;
+    }
+
+    @Override
+    public Unit[] getSubUnitArr() {
+        return bulletArr;
     }
 
 }

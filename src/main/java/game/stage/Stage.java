@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -83,18 +84,15 @@ public abstract class Stage extends JPanel {
             if (unit == null) {
                 break;
             }
-            if (unit.isDead()) {
-                continue;
+            if (!unit.isDead()) {
+                if (unit.isGuided()) {
+                    Unit opponent = unit.getGuidedTarget(opponentArr);
+                    unit.setGuidedTarget(opponent);
+                }
+                unit.move();
+                checkCollision(unit, opponentArr); // 충돌검사
             }
-            if (unit.isGuided()) {
-                Unit opponent = unit.getGuidedTarget(opponentArr);
-                unit.setGuidedTarget(opponent);
-            }
-            unit.move();
-            checkCollision(unit, opponentArr); // 충돌검사
-            if (unit.hasSubUnit()) {
-                moveUnit(unit.getSubUnitArr(), opponentArr);
-            }
+            moveUnit(unit.getSubUnitArr(), opponentArr);
         }
     }
 
@@ -113,7 +111,7 @@ public abstract class Stage extends JPanel {
      * 2. 총알 : 비행기
      * -> 총알 dead. 비행기 체력 감소
      *
-     * @param unit        plane 객체
+     * @param unit        plane 객체, bullet 객체
      * @param opponentArr 상대편 객체
      */
     private void checkCollision(Unit unit, Plane[] opponentArr) {
@@ -159,15 +157,15 @@ public abstract class Stage extends JPanel {
     }
 
     private void drawUnit(Graphics2D g2d, Unit unit) {
-        if (unit.hasSubUnit()) {
-            drawUnit(g2d, unit.getSubUnitArr());
+        drawUnit(g2d, unit.getSubUnitArr());
+        if (!unit.isDead()) {
+            unit.draw(g2d);
         }
-        unit.draw(g2d);
     }
 
     private void drawUnit(Graphics2D g2d, Unit[] unitArr) {
         for (Unit unit : unitArr) {
-            if (unit == null || unit.isDead()) {
+            if (unit == null) {
                 continue;
             }
             drawUnit(g2d, unit);

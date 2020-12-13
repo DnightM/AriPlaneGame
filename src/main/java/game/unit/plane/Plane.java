@@ -16,6 +16,7 @@ public abstract class Plane extends Unit {
     private final Bullet[] bulletArr;
     private int bulletRateCount = 0;
     private int bulletArrIdx = 0;
+    private int bulletLevel = 1;
 
     public Plane(Point pos, double direction) {
         super(pos, direction);
@@ -27,20 +28,6 @@ public abstract class Plane extends Unit {
     private int life;
 
     protected abstract int maxLife(); // 체력
-
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int varianceValue) {
-        life += varianceValue;
-        if (life < 1) {
-            this.kill();
-        }
-        if (life > maxLife()) {
-            life = maxLife();
-        }
-    }
 
     public boolean isCollision(Unit opponent) {
         int x1 = getX();
@@ -59,11 +46,6 @@ public abstract class Plane extends Unit {
             return true; // TODO 차후 세부 충돌코드는 여기에 구현
         }
         return false;
-    }
-
-    @Override
-    public boolean hasSubUnit() {
-        return true;
     }
 
     @Override
@@ -87,9 +69,9 @@ public abstract class Plane extends Unit {
                         Bullet bullet = (Bullet) unitArr[bulletArrIdx];
                         if (bullet != null) {
                             // 총알이 나오는 위치
-                            if (bullet.getClass().getSimpleName().equals(bulletName)) {
+                            if (bullet.getClass().getSimpleName().equalsIgnoreCase(bulletName)) {
                                 if (bullet.isDead()) {
-                                    bullet.alive(getCenterPos());
+                                    bullet.alive(getCenterPos(), bulletLevel);
                                     return;
                                 } else {
                                     // 배열 크기 이상의 총알이 살아있다는 의미. 총알 배열 크기를 늘려줘야함
@@ -97,16 +79,36 @@ public abstract class Plane extends Unit {
                                 }
                             }
                         }
-                        unitArr[bulletArrIdx] = BulletFactory.getBullet(bulletName, getCenterPos());
+                        unitArr[bulletArrIdx] = BulletFactory.getBullet(bulletName, getCenterPos(), bulletLevel);
                     } finally {
                         if (++bulletArrIdx >= UNIT_ARR_LENGTH) {
                             bulletArrIdx = 0;
                         }
                     }
+                    // TODO 테스트용이므로 삭제해야함
+                    bulletLevel++;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int varianceValue) {
+        life += varianceValue;
+        if (life < 1) {
+            this.kill();
+        }
+        if (life > maxLife()) {
+            life = maxLife();
+        }
+    }
+
+    public void setBulletLevel(int bulletLevel) {
+        this.bulletLevel = bulletLevel;
     }
 }
