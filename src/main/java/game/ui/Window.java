@@ -19,16 +19,16 @@ public class Window extends JFrame {
                 System.exit(0);
             }
         });
-        int width = 1000;
         int height = 1000;
+        int width = height * 9 / 16;
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
 
         this.setVisible(true);
         Insets i = this.getInsets();
 
-        this.panelWidth = 1000 - i.left - i.right;
-        this.panelHeight = 1000 - i.top - i.bottom;
+        this.panelWidth = width - i.left - i.right;
+        this.panelHeight = height - i.top - i.bottom;
     }
 
     public void setPanel(Stage b) {
