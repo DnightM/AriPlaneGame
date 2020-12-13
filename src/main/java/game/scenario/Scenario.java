@@ -16,7 +16,7 @@ public abstract class Scenario {
     private final boolean isBezier;
 
     private Point[] ps;
-    private Point nowPos;
+    private double[] nowPos;
 
     protected abstract Point[] getPs();
 
@@ -33,39 +33,40 @@ public abstract class Scenario {
             this.ps = getPs();
             this.psIdx = 0;
             this.psLen = ps.length;
-            this.nowPos = new Point(ps[0].x, ps[0].y);
+            this.nowPos = new double[]{ps[0].x, ps[0].y};
         }
-        return nowPos;
+        return ps[0];
     }
 
     public double[] next() {
         if (delay > 0) {
             delay--;
-            return nowPos.toDoubleArr();
+            return nowPos;
         }
-        if (psIdx == psLen) {
-            return nowPos.toDoubleArr();
+        if (psIdx == psLen - 1) {
+            return nowPos;
         }
         Point p1 = ps[psIdx];
         Point p2 = ps[psIdx + 1];
         if (isBezier) {
-            return nextBezier(p1, p2);
+            nowPos = nextBezier(p1, p2);
         } else {
-            return nextGuided(nowPos, p2);
+            nowPos = nextStraight(nowPos, p2);
         }
+        return nowPos;
     }
 
-    private double[] nextGuided(Point p1, Point p2) {
-        int x = p2.getX() - p1.getX();
-        int y = p2.getY() - p1.getY();
+    private double[] nextStraight(double[] p1, Point p2) {
+        int x = (int) Math.round(p2.x - p1[0]);
+        int y = (int) Math.round(p2.y - p1[1]);
         if (x == 0 && y == 0) {
             psIdx++;
-            return nowPos.toDoubleArr();
+            return nowPos;
         }
         double radian = Math.atan2(y, x);
         double xPos = Math.cos(radian);
         double yPos = Math.sin(radian);
-        return new double[]{p1.x + xPos, p1.y + yPos};
+        return new double[]{p1[0] + xPos, p1[1] + yPos};
     }
 
     private Point cp;
@@ -77,7 +78,6 @@ public abstract class Scenario {
         if (u >= 1) {
             u = 0;
             psIdx++;
-            nowPos = ps[psIdx - 1];
             cp = null;
             return p1.toDoubleArr();
         }
